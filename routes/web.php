@@ -13,15 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
+ * REACT ROUTES
+ */
 Route::view('/', 'app');
-Route::view('/about', 'app');
+Route::view('/about', 'app')->middleware('auth');
+Route::view('/login', 'app')->middleware('guest')->name('login');
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth'])->name('dashboard');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-require __DIR__.'/auth.php';
