@@ -4887,888 +4887,6 @@ Button.displayName = 'Button';
 
 /***/ }),
 
-/***/ "./node_modules/@restart/ui/esm/DataKey.js":
-/*!*************************************************!*\
-  !*** ./node_modules/@restart/ui/esm/DataKey.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ATTRIBUTE_PREFIX": () => (/* binding */ ATTRIBUTE_PREFIX),
-/* harmony export */   "PROPERTY_PREFIX": () => (/* binding */ PROPERTY_PREFIX),
-/* harmony export */   "dataAttr": () => (/* binding */ dataAttr),
-/* harmony export */   "dataProp": () => (/* binding */ dataProp)
-/* harmony export */ });
-const ATTRIBUTE_PREFIX = `data-rr-ui-`;
-const PROPERTY_PREFIX = `rrUi`;
-function dataAttr(property) {
-  return `${ATTRIBUTE_PREFIX}${property}`;
-}
-function dataProp(property) {
-  return `${PROPERTY_PREFIX}${property}`;
-}
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/esm/Modal.js":
-/*!***********************************************!*\
-  !*** ./node_modules/@restart/ui/esm/Modal.js ***!
-  \***********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var dom_helpers_activeElement__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dom-helpers/activeElement */ "./node_modules/dom-helpers/esm/activeElement.js");
-/* harmony import */ var dom_helpers_contains__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! dom-helpers/contains */ "./node_modules/dom-helpers/esm/contains.js");
-/* harmony import */ var dom_helpers_canUseDOM__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dom-helpers/canUseDOM */ "./node_modules/dom-helpers/esm/canUseDOM.js");
-/* harmony import */ var dom_helpers_listen__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! dom-helpers/listen */ "./node_modules/dom-helpers/esm/listen.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var _restart_hooks_useMounted__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @restart/hooks/useMounted */ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMounted.js");
-/* harmony import */ var _restart_hooks_useWillUnmount__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @restart/hooks/useWillUnmount */ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js");
-/* harmony import */ var _restart_hooks_usePrevious__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @restart/hooks/usePrevious */ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/usePrevious.js");
-/* harmony import */ var _restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @restart/hooks/useEventCallback */ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventCallback.js");
-/* harmony import */ var _ModalManager__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./ModalManager */ "./node_modules/@restart/ui/esm/ModalManager.js");
-/* harmony import */ var _useWaitForDOMRef__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./useWaitForDOMRef */ "./node_modules/@restart/ui/esm/useWaitForDOMRef.js");
-/* harmony import */ var _useWindow__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./useWindow */ "./node_modules/@restart/ui/esm/useWindow.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-const _excluded = ["show", "role", "className", "style", "children", "backdrop", "keyboard", "onBackdropClick", "onEscapeKeyDown", "transition", "backdropTransition", "autoFocus", "enforceFocus", "restoreFocus", "restoreFocusOptions", "renderDialog", "renderBackdrop", "manager", "container", "onShow", "onHide", "onExit", "onExited", "onExiting", "onEnter", "onEntering", "onEntered"];
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-/* eslint-disable @typescript-eslint/no-use-before-define, react/prop-types */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-let manager;
-
-function getManager(window) {
-  if (!manager) manager = new _ModalManager__WEBPACK_IMPORTED_MODULE_11__["default"]({
-    ownerDocument: window == null ? void 0 : window.document
-  });
-  return manager;
-}
-
-function useModalManager(provided) {
-  const window = (0,_useWindow__WEBPACK_IMPORTED_MODULE_12__["default"])();
-  const modalManager = provided || getManager(window);
-  const modal = (0,react__WEBPACK_IMPORTED_MODULE_4__.useRef)({
-    dialog: null,
-    backdrop: null
-  });
-  return Object.assign(modal.current, {
-    add: () => modalManager.add(modal.current),
-    remove: () => modalManager.remove(modal.current),
-    isTopModal: () => modalManager.isTopModal(modal.current),
-    setDialogRef: (0,react__WEBPACK_IMPORTED_MODULE_4__.useCallback)(ref => {
-      modal.current.dialog = ref;
-    }, []),
-    setBackdropRef: (0,react__WEBPACK_IMPORTED_MODULE_4__.useCallback)(ref => {
-      modal.current.backdrop = ref;
-    }, [])
-  });
-}
-
-const Modal = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_4__.forwardRef)((_ref, ref) => {
-  let {
-    show = false,
-    role = 'dialog',
-    className,
-    style,
-    children,
-    backdrop = true,
-    keyboard = true,
-    onBackdropClick,
-    onEscapeKeyDown,
-    transition,
-    backdropTransition,
-    autoFocus = true,
-    enforceFocus = true,
-    restoreFocus = true,
-    restoreFocusOptions,
-    renderDialog,
-    renderBackdrop = props => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", Object.assign({}, props)),
-    manager: providedManager,
-    container: containerRef,
-    onShow,
-    onHide = () => {},
-    onExit,
-    onExited,
-    onExiting,
-    onEnter,
-    onEntering,
-    onEntered
-  } = _ref,
-      rest = _objectWithoutPropertiesLoose(_ref, _excluded);
-
-  const container = (0,_useWaitForDOMRef__WEBPACK_IMPORTED_MODULE_13__["default"])(containerRef);
-  const modal = useModalManager(providedManager);
-  const isMounted = (0,_restart_hooks_useMounted__WEBPACK_IMPORTED_MODULE_6__["default"])();
-  const prevShow = (0,_restart_hooks_usePrevious__WEBPACK_IMPORTED_MODULE_8__["default"])(show);
-  const [exited, setExited] = (0,react__WEBPACK_IMPORTED_MODULE_4__.useState)(!show);
-  const lastFocusRef = (0,react__WEBPACK_IMPORTED_MODULE_4__.useRef)(null);
-  (0,react__WEBPACK_IMPORTED_MODULE_4__.useImperativeHandle)(ref, () => modal, [modal]);
-
-  if (dom_helpers_canUseDOM__WEBPACK_IMPORTED_MODULE_2__["default"] && !prevShow && show) {
-    lastFocusRef.current = (0,dom_helpers_activeElement__WEBPACK_IMPORTED_MODULE_0__["default"])();
-  }
-
-  if (!transition && !show && !exited) {
-    setExited(true);
-  } else if (show && exited) {
-    setExited(false);
-  }
-
-  const handleShow = (0,_restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_9__["default"])(() => {
-    modal.add();
-    removeKeydownListenerRef.current = (0,dom_helpers_listen__WEBPACK_IMPORTED_MODULE_3__["default"])(document, 'keydown', handleDocumentKeyDown);
-    removeFocusListenerRef.current = (0,dom_helpers_listen__WEBPACK_IMPORTED_MODULE_3__["default"])(document, 'focus', // the timeout is necessary b/c this will run before the new modal is mounted
-    // and so steals focus from it
-    () => setTimeout(handleEnforceFocus), true);
-
-    if (onShow) {
-      onShow();
-    } // autofocus after onShow to not trigger a focus event for previous
-    // modals before this one is shown.
-
-
-    if (autoFocus) {
-      const currentActiveElement = (0,dom_helpers_activeElement__WEBPACK_IMPORTED_MODULE_0__["default"])(document);
-
-      if (modal.dialog && currentActiveElement && !(0,dom_helpers_contains__WEBPACK_IMPORTED_MODULE_1__["default"])(modal.dialog, currentActiveElement)) {
-        lastFocusRef.current = currentActiveElement;
-        modal.dialog.focus();
-      }
-    }
-  });
-  const handleHide = (0,_restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_9__["default"])(() => {
-    modal.remove();
-    removeKeydownListenerRef.current == null ? void 0 : removeKeydownListenerRef.current();
-    removeFocusListenerRef.current == null ? void 0 : removeFocusListenerRef.current();
-
-    if (restoreFocus) {
-      var _lastFocusRef$current;
-
-      // Support: <=IE11 doesn't support `focus()` on svg elements (RB: #917)
-      (_lastFocusRef$current = lastFocusRef.current) == null ? void 0 : _lastFocusRef$current.focus == null ? void 0 : _lastFocusRef$current.focus(restoreFocusOptions);
-      lastFocusRef.current = null;
-    }
-  }); // TODO: try and combine these effects: https://github.com/react-bootstrap/react-overlays/pull/794#discussion_r409954120
-  // Show logic when:
-  //  - show is `true` _and_ `container` has resolved
-
-  (0,react__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
-    if (!show || !container) return;
-    handleShow();
-  }, [show, container,
-  /* should never change: */
-  handleShow]); // Hide cleanup logic when:
-  //  - `exited` switches to true
-  //  - component unmounts;
-
-  (0,react__WEBPACK_IMPORTED_MODULE_4__.useEffect)(() => {
-    if (!exited) return;
-    handleHide();
-  }, [exited, handleHide]);
-  (0,_restart_hooks_useWillUnmount__WEBPACK_IMPORTED_MODULE_7__["default"])(() => {
-    handleHide();
-  }); // --------------------------------
-
-  const handleEnforceFocus = (0,_restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_9__["default"])(() => {
-    if (!enforceFocus || !isMounted() || !modal.isTopModal()) {
-      return;
-    }
-
-    const currentActiveElement = (0,dom_helpers_activeElement__WEBPACK_IMPORTED_MODULE_0__["default"])();
-
-    if (modal.dialog && currentActiveElement && !(0,dom_helpers_contains__WEBPACK_IMPORTED_MODULE_1__["default"])(modal.dialog, currentActiveElement)) {
-      modal.dialog.focus();
-    }
-  });
-  const handleBackdropClick = (0,_restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_9__["default"])(e => {
-    if (e.target !== e.currentTarget) {
-      return;
-    }
-
-    onBackdropClick == null ? void 0 : onBackdropClick(e);
-
-    if (backdrop === true) {
-      onHide();
-    }
-  });
-  const handleDocumentKeyDown = (0,_restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_9__["default"])(e => {
-    if (keyboard && e.keyCode === 27 && modal.isTopModal()) {
-      onEscapeKeyDown == null ? void 0 : onEscapeKeyDown(e);
-
-      if (!e.defaultPrevented) {
-        onHide();
-      }
-    }
-  });
-  const removeFocusListenerRef = (0,react__WEBPACK_IMPORTED_MODULE_4__.useRef)();
-  const removeKeydownListenerRef = (0,react__WEBPACK_IMPORTED_MODULE_4__.useRef)();
-
-  const handleHidden = (...args) => {
-    setExited(true);
-    onExited == null ? void 0 : onExited(...args);
-  };
-
-  const Transition = transition;
-
-  if (!container || !(show || Transition && !exited)) {
-    return null;
-  }
-
-  const dialogProps = Object.assign({
-    role,
-    ref: modal.setDialogRef,
-    // apparently only works on the dialog role element
-    'aria-modal': role === 'dialog' ? true : undefined
-  }, rest, {
-    style,
-    className,
-    tabIndex: -1
-  });
-  let dialog = renderDialog ? renderDialog(dialogProps) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", Object.assign({}, dialogProps, {
-    children: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.cloneElement(children, {
-      role: 'document'
-    })
-  }));
-
-  if (Transition) {
-    dialog = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(Transition, {
-      appear: true,
-      unmountOnExit: true,
-      in: !!show,
-      onExit: onExit,
-      onExiting: onExiting,
-      onExited: handleHidden,
-      onEnter: onEnter,
-      onEntering: onEntering,
-      onEntered: onEntered,
-      children: dialog
-    });
-  }
-
-  let backdropElement = null;
-
-  if (backdrop) {
-    const BackdropTransition = backdropTransition;
-    backdropElement = renderBackdrop({
-      ref: modal.setBackdropRef,
-      onClick: handleBackdropClick
-    });
-
-    if (BackdropTransition) {
-      backdropElement = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(BackdropTransition, {
-        appear: true,
-        in: !!show,
-        children: backdropElement
-      });
-    }
-  }
-
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.Fragment, {
-    children: /*#__PURE__*/react_dom__WEBPACK_IMPORTED_MODULE_5__.createPortal( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.Fragment, {
-      children: [backdropElement, dialog]
-    }), container)
-  });
-});
-Modal.displayName = 'Modal';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Object.assign(Modal, {
-  Manager: _ModalManager__WEBPACK_IMPORTED_MODULE_11__["default"]
-}));
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/esm/ModalManager.js":
-/*!******************************************************!*\
-  !*** ./node_modules/@restart/ui/esm/ModalManager.js ***!
-  \******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "OPEN_DATA_ATTRIBUTE": () => (/* binding */ OPEN_DATA_ATTRIBUTE),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var dom_helpers_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dom-helpers/css */ "./node_modules/dom-helpers/esm/css.js");
-/* harmony import */ var _DataKey__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DataKey */ "./node_modules/@restart/ui/esm/DataKey.js");
-/* harmony import */ var _getScrollbarWidth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./getScrollbarWidth */ "./node_modules/@restart/ui/esm/getScrollbarWidth.js");
-
-
-
-const OPEN_DATA_ATTRIBUTE = (0,_DataKey__WEBPACK_IMPORTED_MODULE_1__.dataAttr)('modal-open');
-/**
- * Manages a stack of Modals as well as ensuring
- * body scrolling is is disabled and padding accounted for
- */
-
-class ModalManager {
-  constructor({
-    ownerDocument,
-    handleContainerOverflow = true,
-    isRTL = false
-  } = {}) {
-    this.handleContainerOverflow = handleContainerOverflow;
-    this.isRTL = isRTL;
-    this.modals = [];
-    this.ownerDocument = ownerDocument;
-  }
-
-  getScrollbarWidth() {
-    return (0,_getScrollbarWidth__WEBPACK_IMPORTED_MODULE_2__["default"])(this.ownerDocument);
-  }
-
-  getElement() {
-    return (this.ownerDocument || document).body;
-  }
-
-  setModalAttributes(_modal) {// For overriding
-  }
-
-  removeModalAttributes(_modal) {// For overriding
-  }
-
-  setContainerStyle(containerState) {
-    const style = {
-      overflow: 'hidden'
-    }; // we are only interested in the actual `style` here
-    // because we will override it
-
-    const paddingProp = this.isRTL ? 'paddingLeft' : 'paddingRight';
-    const container = this.getElement();
-    containerState.style = {
-      overflow: container.style.overflow,
-      [paddingProp]: container.style[paddingProp]
-    };
-
-    if (containerState.scrollBarWidth) {
-      // use computed style, here to get the real padding
-      // to add our scrollbar width
-      style[paddingProp] = `${parseInt((0,dom_helpers_css__WEBPACK_IMPORTED_MODULE_0__["default"])(container, paddingProp) || '0', 10) + containerState.scrollBarWidth}px`;
-    }
-
-    container.setAttribute(OPEN_DATA_ATTRIBUTE, '');
-    (0,dom_helpers_css__WEBPACK_IMPORTED_MODULE_0__["default"])(container, style);
-  }
-
-  reset() {
-    [...this.modals].forEach(m => this.remove(m));
-  }
-
-  removeContainerStyle(containerState) {
-    const container = this.getElement();
-    container.removeAttribute(OPEN_DATA_ATTRIBUTE);
-    Object.assign(container.style, containerState.style);
-  }
-
-  add(modal) {
-    let modalIdx = this.modals.indexOf(modal);
-
-    if (modalIdx !== -1) {
-      return modalIdx;
-    }
-
-    modalIdx = this.modals.length;
-    this.modals.push(modal);
-    this.setModalAttributes(modal);
-
-    if (modalIdx !== 0) {
-      return modalIdx;
-    }
-
-    this.state = {
-      scrollBarWidth: this.getScrollbarWidth(),
-      style: {}
-    };
-
-    if (this.handleContainerOverflow) {
-      this.setContainerStyle(this.state);
-    }
-
-    return modalIdx;
-  }
-
-  remove(modal) {
-    const modalIdx = this.modals.indexOf(modal);
-
-    if (modalIdx === -1) {
-      return;
-    }
-
-    this.modals.splice(modalIdx, 1); // if that was the last modal in a container,
-    // clean up the container
-
-    if (!this.modals.length && this.handleContainerOverflow) {
-      this.removeContainerStyle(this.state);
-    }
-
-    this.removeModalAttributes(modal);
-  }
-
-  isTopModal(modal) {
-    return !!this.modals.length && this.modals[this.modals.length - 1] === modal;
-  }
-
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ModalManager);
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/esm/Nav.js":
-/*!*********************************************!*\
-  !*** ./node_modules/@restart/ui/esm/Nav.js ***!
-  \*********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var dom_helpers_querySelectorAll__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dom-helpers/querySelectorAll */ "./node_modules/dom-helpers/esm/querySelectorAll.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _restart_hooks_useForceUpdate__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @restart/hooks/useForceUpdate */ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js");
-/* harmony import */ var _restart_hooks_useMergedRefs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @restart/hooks/useMergedRefs */ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js");
-/* harmony import */ var _NavContext__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NavContext */ "./node_modules/@restart/ui/esm/NavContext.js");
-/* harmony import */ var _SelectableContext__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./SelectableContext */ "./node_modules/@restart/ui/esm/SelectableContext.js");
-/* harmony import */ var _TabContext__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TabContext */ "./node_modules/@restart/ui/esm/TabContext.js");
-/* harmony import */ var _DataKey__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DataKey */ "./node_modules/@restart/ui/esm/DataKey.js");
-/* harmony import */ var _NavItem__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./NavItem */ "./node_modules/@restart/ui/esm/NavItem.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-const _excluded = ["as", "onSelect", "activeKey", "role", "onKeyDown"];
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = () => {};
-
-const EVENT_KEY_ATTR = (0,_DataKey__WEBPACK_IMPORTED_MODULE_5__.dataAttr)('event-key');
-const Nav = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef((_ref, ref) => {
-  let {
-    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component = 'div',
-    onSelect,
-    activeKey,
-    role,
-    onKeyDown
-  } = _ref,
-      props = _objectWithoutPropertiesLoose(_ref, _excluded);
-
-  // A ref and forceUpdate for refocus, b/c we only want to trigger when needed
-  // and don't want to reset the set in the effect
-  const forceUpdate = (0,_restart_hooks_useForceUpdate__WEBPACK_IMPORTED_MODULE_2__["default"])();
-  const needsRefocusRef = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(false);
-  const parentOnSelect = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_SelectableContext__WEBPACK_IMPORTED_MODULE_6__["default"]);
-  const tabContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_TabContext__WEBPACK_IMPORTED_MODULE_7__["default"]);
-  let getControlledId, getControllerId;
-
-  if (tabContext) {
-    role = role || 'tablist';
-    activeKey = tabContext.activeKey; // TODO: do we need to duplicate these?
-
-    getControlledId = tabContext.getControlledId;
-    getControllerId = tabContext.getControllerId;
-  }
-
-  const listNode = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
-
-  const getNextActiveTab = offset => {
-    const currentListNode = listNode.current;
-    if (!currentListNode) return null;
-    const items = (0,dom_helpers_querySelectorAll__WEBPACK_IMPORTED_MODULE_0__["default"])(currentListNode, `[${EVENT_KEY_ATTR}]:not([aria-disabled=true])`);
-    const activeChild = currentListNode.querySelector('[aria-selected=true]');
-    if (!activeChild) return null;
-    const index = items.indexOf(activeChild);
-    if (index === -1) return null;
-    let nextIndex = index + offset;
-    if (nextIndex >= items.length) nextIndex = 0;
-    if (nextIndex < 0) nextIndex = items.length - 1;
-    return items[nextIndex];
-  };
-
-  const handleSelect = (key, event) => {
-    if (key == null) return;
-    onSelect == null ? void 0 : onSelect(key, event);
-    parentOnSelect == null ? void 0 : parentOnSelect(key, event);
-  };
-
-  const handleKeyDown = event => {
-    onKeyDown == null ? void 0 : onKeyDown(event);
-
-    if (!tabContext) {
-      return;
-    }
-
-    let nextActiveChild;
-
-    switch (event.key) {
-      case 'ArrowLeft':
-      case 'ArrowUp':
-        nextActiveChild = getNextActiveTab(-1);
-        break;
-
-      case 'ArrowRight':
-      case 'ArrowDown':
-        nextActiveChild = getNextActiveTab(1);
-        break;
-
-      default:
-        return;
-    }
-
-    if (!nextActiveChild) return;
-    event.preventDefault();
-    handleSelect(nextActiveChild.dataset[(0,_DataKey__WEBPACK_IMPORTED_MODULE_5__.dataProp)('EventKey')] || null, event);
-    needsRefocusRef.current = true;
-    forceUpdate();
-  };
-
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    if (listNode.current && needsRefocusRef.current) {
-      const activeChild = listNode.current.querySelector(`[${EVENT_KEY_ATTR}][aria-selected=true]`);
-      activeChild == null ? void 0 : activeChild.focus();
-    }
-
-    needsRefocusRef.current = false;
-  });
-  const mergedRef = (0,_restart_hooks_useMergedRefs__WEBPACK_IMPORTED_MODULE_3__["default"])(ref, listNode);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_SelectableContext__WEBPACK_IMPORTED_MODULE_6__["default"].Provider, {
-    value: handleSelect,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_NavContext__WEBPACK_IMPORTED_MODULE_8__["default"].Provider, {
-      value: {
-        role,
-        // used by NavLink to determine it's role
-        activeKey: (0,_SelectableContext__WEBPACK_IMPORTED_MODULE_6__.makeEventKey)(activeKey),
-        getControlledId: getControlledId || noop,
-        getControllerId: getControllerId || noop
-      },
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Component, Object.assign({}, props, {
-        onKeyDown: handleKeyDown,
-        ref: mergedRef,
-        role: role
-      }))
-    })
-  });
-});
-Nav.displayName = 'Nav';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Object.assign(Nav, {
-  Item: _NavItem__WEBPACK_IMPORTED_MODULE_9__["default"]
-}));
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/esm/NavContext.js":
-/*!****************************************************!*\
-  !*** ./node_modules/@restart/ui/esm/NavContext.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const NavContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(null);
-NavContext.displayName = 'NavContext';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NavContext);
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/esm/NavItem.js":
-/*!*************************************************!*\
-  !*** ./node_modules/@restart/ui/esm/NavItem.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "useNavItem": () => (/* binding */ useNavItem),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @restart/hooks/useEventCallback */ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useEventCallback.js");
-/* harmony import */ var _NavContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NavContext */ "./node_modules/@restart/ui/esm/NavContext.js");
-/* harmony import */ var _SelectableContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SelectableContext */ "./node_modules/@restart/ui/esm/SelectableContext.js");
-/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Button */ "./node_modules/@restart/ui/esm/Button.js");
-/* harmony import */ var _DataKey__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./DataKey */ "./node_modules/@restart/ui/esm/DataKey.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-const _excluded = ["as", "active", "eventKey"];
-
-function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
-
-
-
-
-
-
-
-
-
-function useNavItem({
-  key,
-  onClick,
-  active,
-  id,
-  role,
-  disabled
-}) {
-  const parentOnSelect = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_SelectableContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
-  const navContext = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_NavContext__WEBPACK_IMPORTED_MODULE_4__["default"]);
-  let isActive = active;
-  const props = {
-    role
-  };
-
-  if (navContext) {
-    if (!role && navContext.role === 'tablist') props.role = 'tab';
-    const contextControllerId = navContext.getControllerId(key != null ? key : null);
-    const contextControlledId = navContext.getControlledId(key != null ? key : null); // @ts-ignore
-
-    props[(0,_DataKey__WEBPACK_IMPORTED_MODULE_5__.dataAttr)('event-key')] = key;
-    props.id = contextControllerId || id;
-    props['aria-controls'] = contextControlledId;
-    isActive = active == null && key != null ? navContext.activeKey === key : active;
-  }
-
-  if (props.role === 'tab') {
-    if (disabled) {
-      props.tabIndex = -1;
-      props['aria-disabled'] = true;
-    }
-
-    if (isActive) {
-      props['aria-selected'] = isActive;
-    } else {
-      props.tabIndex = -1;
-    }
-  }
-
-  props.onClick = (0,_restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_1__["default"])(e => {
-    if (disabled) return;
-    onClick == null ? void 0 : onClick(e);
-
-    if (key == null) {
-      return;
-    }
-
-    if (parentOnSelect && !e.isPropagationStopped()) {
-      parentOnSelect(key, e);
-    }
-  });
-  return [props, {
-    isActive
-  }];
-}
-const NavItem = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((_ref, ref) => {
-  let {
-    as: Component = _Button__WEBPACK_IMPORTED_MODULE_6__["default"],
-    active,
-    eventKey
-  } = _ref,
-      options = _objectWithoutPropertiesLoose(_ref, _excluded);
-
-  const [props, meta] = useNavItem(Object.assign({
-    key: (0,_SelectableContext__WEBPACK_IMPORTED_MODULE_3__.makeEventKey)(eventKey, options.href),
-    active
-  }, options)); // @ts-ignore
-
-  props[(0,_DataKey__WEBPACK_IMPORTED_MODULE_5__.dataAttr)('active')] = meta.isActive;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Component, Object.assign({}, options, props, {
-    ref: ref
-  }));
-});
-NavItem.displayName = 'NavItem';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NavItem);
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/esm/SelectableContext.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/@restart/ui/esm/SelectableContext.js ***!
-  \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "makeEventKey": () => (/* binding */ makeEventKey),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const SelectableContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(null);
-const makeEventKey = (eventKey, href = null) => {
-  if (eventKey != null) return String(eventKey);
-  return href || null;
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SelectableContext);
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/esm/TabContext.js":
-/*!****************************************************!*\
-  !*** ./node_modules/@restart/ui/esm/TabContext.js ***!
-  \****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const TabContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(null);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TabContext);
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/esm/getScrollbarWidth.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/@restart/ui/esm/getScrollbarWidth.js ***!
-  \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ getBodyScrollbarWidth)
-/* harmony export */ });
-/**
- * Get the width of the vertical window scrollbar if it's visible
- */
-function getBodyScrollbarWidth(ownerDocument = document) {
-  const window = ownerDocument.defaultView;
-  return Math.abs(window.innerWidth - ownerDocument.documentElement.clientWidth);
-}
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/esm/useWaitForDOMRef.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@restart/ui/esm/useWaitForDOMRef.js ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "resolveContainerRef": () => (/* binding */ resolveContainerRef),
-/* harmony export */   "default": () => (/* binding */ useWaitForDOMRef)
-/* harmony export */ });
-/* harmony import */ var dom_helpers_ownerDocument__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dom-helpers/ownerDocument */ "./node_modules/dom-helpers/esm/ownerDocument.js");
-/* harmony import */ var dom_helpers_canUseDOM__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! dom-helpers/canUseDOM */ "./node_modules/dom-helpers/esm/canUseDOM.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _useWindow__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./useWindow */ "./node_modules/@restart/ui/esm/useWindow.js");
-
-
-
-
-const resolveContainerRef = (ref, document) => {
-  var _ref;
-
-  if (!dom_helpers_canUseDOM__WEBPACK_IMPORTED_MODULE_1__["default"]) return null;
-  if (ref == null) return (document || (0,dom_helpers_ownerDocument__WEBPACK_IMPORTED_MODULE_0__["default"])()).body;
-  if (typeof ref === 'function') ref = ref();
-  if (ref && 'current' in ref) ref = ref.current;
-  if ((_ref = ref) != null && _ref.nodeType) return ref || null;
-  return null;
-};
-function useWaitForDOMRef(ref, onResolved) {
-  const window = (0,_useWindow__WEBPACK_IMPORTED_MODULE_3__["default"])();
-  const [resolvedRef, setRef] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(() => resolveContainerRef(ref, window == null ? void 0 : window.document));
-
-  if (!resolvedRef) {
-    const earlyRef = resolveContainerRef(ref);
-    if (earlyRef) setRef(earlyRef);
-  }
-
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    if (onResolved && resolvedRef) {
-      onResolved(resolvedRef);
-    }
-  }, [onResolved, resolvedRef]);
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    const nextRef = resolveContainerRef(ref);
-
-    if (nextRef !== resolvedRef) {
-      setRef(nextRef);
-    }
-  }, [ref, resolvedRef]);
-  return resolvedRef;
-}
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/esm/useWindow.js":
-/*!***************************************************!*\
-  !*** ./node_modules/@restart/ui/esm/useWindow.js ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "WindowProvider": () => (/* binding */ WindowProvider),
-/* harmony export */   "default": () => (/* binding */ useWindow)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var dom_helpers_canUseDOM__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! dom-helpers/canUseDOM */ "./node_modules/dom-helpers/esm/canUseDOM.js");
-
-
-const Context = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)(dom_helpers_canUseDOM__WEBPACK_IMPORTED_MODULE_1__["default"] ? window : undefined);
-const WindowProvider = Context.Provider;
-/**
- * The document "window" placed in React context. Helpful for determining
- * SSR context, or when rendering into an iframe.
- *
- * @returns the current window
- */
-
-function useWindow() {
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(Context);
-}
-
-/***/ }),
-
 /***/ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/index.js":
 /*!***************************************************************************!*\
   !*** ./node_modules/@restart/ui/node_modules/@restart/hooks/esm/index.js ***!
@@ -5963,49 +5081,6 @@ function useEventListener(eventTarget, event, listener, capture) {
       return target.removeEventListener(event, handler, capture);
     };
   }, [eventTarget]);
-}
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js":
-/*!************************************************************************************!*\
-  !*** ./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useForceUpdate.js ***!
-  \************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ useForceUpdate)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-/**
- * Returns a function that triggers a component update. the hook equivalent to
- * `this.forceUpdate()` in a class component. In most cases using a state value directly
- * is preferable but may be required in some advanced usages of refs for interop or
- * when direct DOM manipulation is required.
- *
- * ```ts
- * const forceUpdate = useForceUpdate();
- *
- * const updateOnClick = useCallback(() => {
- *  forceUpdate()
- * }, [forceUpdate])
- *
- * return <button type="button" onClick={updateOnClick}>Hi there</button>
- * ```
- */
-
-function useForceUpdate() {
-  // The toggling state value is designed to defeat React optimizations for skipping
-  // updates when they are stricting equal to the last state value
-  var _useReducer = (0,react__WEBPACK_IMPORTED_MODULE_0__.useReducer)(function (state) {
-    return !state;
-  }, false),
-      dispatch = _useReducer[1];
-
-  return dispatch;
 }
 
 /***/ }),
@@ -6330,62 +5405,6 @@ function useMergeStateFromProps(props, gDSFP, initialState) {
 
 /***/ }),
 
-/***/ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMergedRefs.js ***!
-  \***********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "mergeRefs": () => (/* binding */ mergeRefs),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-
-var toFnRef = function toFnRef(ref) {
-  return !ref || typeof ref === 'function' ? ref : function (value) {
-    ref.current = value;
-  };
-};
-
-function mergeRefs(refA, refB) {
-  var a = toFnRef(refA);
-  var b = toFnRef(refB);
-  return function (value) {
-    if (a) a(value);
-    if (b) b(value);
-  };
-}
-/**
- * Create and returns a single callback ref composed from two other Refs.
- *
- * ```tsx
- * const Button = React.forwardRef((props, ref) => {
- *   const [element, attachRef] = useCallbackRef<HTMLButtonElement>();
- *   const mergedRef = useMergedRefs(ref, attachRef);
- *
- *   return <button ref={mergedRef} {...props}/>
- * })
- * ```
- *
- * @param refA A Callback or mutable Ref
- * @param refB A Callback or mutable Ref
- * @category refs
- */
-
-function useMergedRefs(refA, refB) {
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(function () {
-    return mergeRefs(refA, refB);
-  }, [refA, refB]);
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (useMergedRefs);
-
-/***/ }),
-
 /***/ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMounted.js":
 /*!********************************************************************************!*\
   !*** ./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useMounted.js ***!
@@ -6594,67 +5613,6 @@ function useResizeObserver(element) {
     };
   }, [element]);
   return rect;
-}
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js ***!
-  \***********************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ useUpdatedRef)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-/**
- * Returns a ref that is immediately updated with the new value
- *
- * @param value The Ref value
- * @category refs
- */
-
-function useUpdatedRef(value) {
-  var valueRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(value);
-  valueRef.current = value;
-  return valueRef;
-}
-
-/***/ }),
-
-/***/ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js":
-/*!************************************************************************************!*\
-  !*** ./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useWillUnmount.js ***!
-  \************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ useWillUnmount)
-/* harmony export */ });
-/* harmony import */ var _useUpdatedRef__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./useUpdatedRef */ "./node_modules/@restart/ui/node_modules/@restart/hooks/esm/useUpdatedRef.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-
-/**
- * Attach a callback that fires when a component unmounts
- *
- * @param fn Handler to run when the component unmounts
- * @category effects
- */
-
-function useWillUnmount(fn) {
-  var onUnmount = (0,_useUpdatedRef__WEBPACK_IMPORTED_MODULE_0__["default"])(fn);
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    return function () {
-      return onUnmount.current();
-    };
-  }, []);
 }
 
 /***/ }),
@@ -8720,19 +7678,13 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Index)
-/* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var _components_AppNavbar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/AppNavbar */ "./resources/js/components/AppNavbar.js");
-/* harmony import */ var _components_pages_About__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/About */ "./resources/js/components/pages/About.js");
-/* harmony import */ var _components_Example__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Example */ "./resources/js/components/Example.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _routes_RoutesProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./routes/RoutesProvider */ "./resources/js/routes/RoutesProvider.js");
+/* harmony import */ var _components_pages_Home__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/Home */ "./resources/js/components/pages/Home.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
@@ -8740,33 +7692,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-function Index() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)("div", {
-    className: "container",
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_AppNavbar__WEBPACK_IMPORTED_MODULE_4__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Outlet, {})]
-  });
-}
 
 if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_3__.Provider, {
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_3__.Provider, {
     store: _store__WEBPACK_IMPORTED_MODULE_2__["default"],
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.BrowserRouter, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Routes, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
-          path: "/",
-          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(Index, {}),
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
-            path: "about",
-            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_pages_About__WEBPACK_IMPORTED_MODULE_5__["default"], {})
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Route, {
-            index: true,
-            element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_Example__WEBPACK_IMPORTED_MODULE_6__["default"], {})
-          })]
-        })
-      })
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_routes_RoutesProvider__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      home: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_pages_Home__WEBPACK_IMPORTED_MODULE_5__["default"], {})
     })
   }), document.getElementById('app'));
 }
@@ -8816,6 +7747,7 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers['Accept'] = 'application/json';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -8832,125 +7764,27 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/components/AppNavbar.js":
-/*!**********************************************!*\
-  !*** ./resources/js/components/AppNavbar.js ***!
-  \**********************************************/
+/***/ "./resources/js/common/auth.js":
+/*!*************************************!*\
+  !*** ./resources/js/common/auth.js ***!
+  \*************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ AppNavbar)
+/* harmony export */   "parseErrors": () => (/* binding */ parseErrors)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Navbar.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Container.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Nav.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+var parseErrors = function parseErrors(errors) {
+  var errors_ = [];
 
+  for (var _i = 0, _Object$keys = Object.keys(errors); _i < _Object$keys.length; _i++) {
+    var error = _Object$keys[_i];
+    errors_ = errors_.concat(errors[error]);
+  }
 
-
-
-
-function AppNavbar() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"], {
-    bg: "light",
-    expand: "lg",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Brand, {
-        as: react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link,
-        to: "/",
-        children: "Scaffold"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Toggle, {
-        "aria-controls": "basic-navbar-nav"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__["default"].Collapse, {
-        id: "basic-navbar-nav",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
-          className: "me-auto",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Link, {
-            as: react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Link,
-            to: "about",
-            children: "About"
-          })
-        })
-      })]
-    })
-  });
-}
-
-/***/ }),
-
-/***/ "./resources/js/components/Example.js":
-/*!********************************************!*\
-  !*** ./resources/js/components/Example.js ***!
-  \********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Example)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/ButtonGroup.js");
-/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _store_slices_counter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/slices/counter */ "./resources/js/store/slices/counter.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-
-
-
-
-
-function Example() {
-  var count = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useSelector)(_store_slices_counter__WEBPACK_IMPORTED_MODULE_3__["default"].selectors.getCount);
-  var _slice$actions = _store_slices_counter__WEBPACK_IMPORTED_MODULE_3__["default"].actions,
-      increment = _slice$actions.increment,
-      decrement = _slice$actions.decrement;
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-    className: "container",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-      className: "row justify-content-center",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-        className: "col-md-8",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-          className: "card",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
-            className: "card-header",
-            children: ["Count: ", count]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
-            className: "card-body",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
-              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
-                onClick: function onClick() {
-                  return dispatch(increment());
-                },
-                variant: "primary",
-                children: "Increment"
-              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_6__["default"], {
-                onClick: function onClick() {
-                  return dispatch(decrement());
-                },
-                variant: "warning",
-                children: "Decrement"
-              })]
-            })
-          })]
-        })
-      })
-    })
-  });
-}
-
-if (document.getElementById('example')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Example, {}), document.getElementById('example'));
-}
+  return errors_;
+};
 
 /***/ }),
 
@@ -8974,6 +7808,367 @@ function About() {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
       children: "About"
+    })
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/Home.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/pages/Home.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Home)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/ButtonGroup.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _store_slices_counter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../store/slices/counter */ "./resources/js/store/slices/counter.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+function Home() {
+  var count = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useSelector)(_store_slices_counter__WEBPACK_IMPORTED_MODULE_2__["default"].selectors.getCount);
+  var _slice$actions = _store_slices_counter__WEBPACK_IMPORTED_MODULE_2__["default"].actions,
+      increment = _slice$actions.increment,
+      decrement = _slice$actions.decrement;
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_1__.useDispatch)();
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+    className: "container",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+      className: "row justify-content-center",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        className: "col-md-8",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+          className: "card",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)("div", {
+            className: "card-header",
+            children: ["Count: ", count]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+            className: "card-body",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__["default"], {
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+                onClick: function onClick() {
+                  return dispatch(increment());
+                },
+                variant: "primary",
+                children: "Increment"
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+                onClick: function onClick() {
+                  return dispatch(decrement());
+                },
+                variant: "warning",
+                children: "Decrement"
+              })]
+            })
+          })]
+        })
+      })
+    })
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/auth/Login.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/pages/auth/Login.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Login)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Form.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Button.js");
+/* harmony import */ var react_bootstrap__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-bootstrap */ "./node_modules/react-bootstrap/esm/Alert.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var _widgets_CSRFField__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../widgets/CSRFField */ "./resources/js/components/widgets/CSRFField.js");
+/* harmony import */ var _common_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../common/auth */ "./resources/js/common/auth.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+
+
+
+
+
+
+
+
+function Login() {
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+      _useState2 = _slicedToArray(_useState, 2),
+      email = _useState2[0],
+      setEmail = _useState2[1];
+
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+      _useState4 = _slicedToArray(_useState3, 2),
+      password = _useState4[0],
+      setPassword = _useState4[1];
+
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      remember = _useState6[0],
+      setRemember = _useState6[1];
+
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+      _useState8 = _slicedToArray(_useState7, 2),
+      errors = _useState8[0],
+      setErrors = _useState8[1];
+
+  var login = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)( /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(e) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              e.preventDefault();
+              setErrors([]);
+              _context.prev = 2;
+              _context.next = 5;
+              return axios.post('/login', {
+                email: email,
+                password: password,
+                remember: remember
+              });
+
+            case 5:
+              response = _context.sent;
+              _context.next = 11;
+              break;
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](2);
+              setErrors((0,_common_auth__WEBPACK_IMPORTED_MODULE_3__.parseErrors)(_context.t0.response.data.errors));
+
+            case 11:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[2, 8]]);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }(), [email, password, remember]);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+    className: "container m-5",
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      className: "row justify-content-center",
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+        className: "col-md-8",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+          className: "card",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+            className: "card-header",
+            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("h1", {
+              className: "text-center h5",
+              children: "LOGIN"
+            })
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+            className: "card-body",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Errors, {
+              errors: errors
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"], {
+              method: "POST",
+              onSubmit: login,
+              children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_widgets_CSRFField__WEBPACK_IMPORTED_MODULE_2__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Group, {
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Label, {
+                  htmlFor: "email",
+                  children: "Email:"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Control, {
+                  value: email,
+                  onChange: function onChange(e) {
+                    return setEmail(e.target.value);
+                  },
+                  className: "block mt-1 w-full",
+                  type: "email",
+                  required: true,
+                  autoFocus: true
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Group, {
+                className: "mt-4",
+                children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Label, {
+                  htmlFor: "password",
+                  children: "Password:"
+                }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Control, {
+                  id: "password",
+                  className: "block mt-1 w-full",
+                  value: password,
+                  onChange: function onChange(e) {
+                    return setPassword(e.target.value);
+                  },
+                  type: "password",
+                  name: "password",
+                  required: true,
+                  autoComplete: "current-password"
+                })]
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Group, {
+                className: "mb-3",
+                controlId: "remember",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Check, {
+                  value: remember,
+                  onChange: function onChange(e) {
+                    return setRemember(!remember);
+                  },
+                  type: "checkbox",
+                  label: "Remember me"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_5__["default"].Group, {
+                className: "flex items-center justify-end mt-4",
+                children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Link, {
+                  className: "underline text-sm text-gray-600 hover:text-gray-900",
+                  to: "/",
+                  children: "Forgot your password?"
+                })
+              }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_bootstrap__WEBPACK_IMPORTED_MODULE_7__["default"], {
+                type: "submit",
+                className: "ml-3",
+                children: "Log in"
+              })]
+            })]
+          })]
+        })
+      })
+    })
+  });
+}
+
+function Errors(_ref2) {
+  var errors = _ref2.errors;
+
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
+      _useState10 = _slicedToArray(_useState9, 2),
+      show = _useState10[0],
+      setShow = _useState10[1];
+
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
+    setShow(errors.length > 0);
+  }, [errors]);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+    children: errors && errors.length > 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)("ul", {
+        className: "mt-3 list-disc list-inside text-sm text-red-600",
+        children: errors.map(function (error, idx) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_8__["default"], {
+            show: show,
+            onClick: function onClick() {
+              return setShow(false);
+            },
+            variant: "danger",
+            dismissible: true,
+            children: ["Error! ", error]
+          }, idx);
+        })
+      })
+    })
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/widgets/CSRFField.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/widgets/CSRFField.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ CSRFField)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+function CSRFField() {
+  var csrf = document.querySelector('meta[name="csrf-token"]').content;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+    type: "hidden",
+    name: "_token",
+    value: csrf
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/routes/RoutesProvider.js":
+/*!***********************************************!*\
+  !*** ./resources/js/routes/RoutesProvider.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ RoutesProvider)
+/* harmony export */ });
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/index.js");
+/* harmony import */ var _components_pages_About__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/pages/About */ "./resources/js/components/pages/About.js");
+/* harmony import */ var _components_pages_Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/pages/Home */ "./resources/js/components/pages/Home.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _components_pages_auth_Login__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/pages/auth/Login */ "./resources/js/components/pages/auth/Login.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+function RoutesProvider(_ref) {
+  var home = _ref.home;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.BrowserRouter, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Routes, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+        path: "/",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+          path: "about",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_pages_About__WEBPACK_IMPORTED_MODULE_0__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+          path: "login",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_pages_auth_Login__WEBPACK_IMPORTED_MODULE_3__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_6__.Route, {
+          index: true,
+          element: home
+        })]
+      })
     })
   });
 }
@@ -14171,72 +13366,6 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 /***/ }),
 
-/***/ "./node_modules/dom-helpers/esm/activeElement.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/dom-helpers/esm/activeElement.js ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ activeElement)
-/* harmony export */ });
-/* harmony import */ var _ownerDocument__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ownerDocument */ "./node_modules/dom-helpers/esm/ownerDocument.js");
-
-/**
- * Returns the actively focused element safely.
- *
- * @param doc the document to check
- */
-
-function activeElement(doc) {
-  if (doc === void 0) {
-    doc = (0,_ownerDocument__WEBPACK_IMPORTED_MODULE_0__["default"])();
-  }
-
-  // Support: IE 9 only
-  // IE9 throws an "Unspecified error" accessing document.activeElement from an <iframe>
-  try {
-    var active = doc.activeElement; // IE11 returns a seemingly empty object in some cases when accessing
-    // document.activeElement from an <iframe>
-
-    if (!active || !active.nodeName) return null;
-    return active;
-  } catch (e) {
-    /* ie throws if no active element */
-    return doc.body;
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/dom-helpers/esm/addClass.js":
-/*!**************************************************!*\
-  !*** ./node_modules/dom-helpers/esm/addClass.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ addClass)
-/* harmony export */ });
-/* harmony import */ var _hasClass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./hasClass */ "./node_modules/dom-helpers/esm/hasClass.js");
-
-/**
- * Adds a CSS class to a given element.
- * 
- * @param element the element
- * @param className the CSS class name
- */
-
-function addClass(element, className) {
-  if (element.classList) element.classList.add(className);else if (!(0,_hasClass__WEBPACK_IMPORTED_MODULE_0__["default"])(element, className)) if (typeof element.className === 'string') element.className = element.className + " " + className;else element.setAttribute('class', (element.className && element.className.baseVal || '') + " " + className);
-}
-
-/***/ }),
-
 /***/ "./node_modules/dom-helpers/esm/addEventListener.js":
 /*!**********************************************************!*\
   !*** ./node_modules/dom-helpers/esm/addEventListener.js ***!
@@ -14345,34 +13474,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/dom-helpers/esm/contains.js":
-/*!**************************************************!*\
-  !*** ./node_modules/dom-helpers/esm/contains.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ contains)
-/* harmony export */ });
-/* eslint-disable no-bitwise, no-cond-assign */
-
-/**
- * Checks if an element contains another given element.
- * 
- * @param context the context element
- * @param node the element to check
- */
-function contains(context, node) {
-  // HTML DOM and SVG DOM may have different support levels,
-  // so we need to check on context instead of a document root element.
-  if (context.contains) return context.contains(node);
-  if (context.compareDocumentPosition) return context === node || !!(context.compareDocumentPosition(node) & 16);
-}
-
-/***/ }),
-
 /***/ "./node_modules/dom-helpers/esm/css.js":
 /*!*********************************************!*\
   !*** ./node_modules/dom-helpers/esm/css.js ***!
@@ -14444,30 +13545,6 @@ __webpack_require__.r(__webpack_exports__);
 
 function getComputedStyle(node, psuedoElement) {
   return (0,_ownerWindow__WEBPACK_IMPORTED_MODULE_0__["default"])(node).getComputedStyle(node, psuedoElement);
-}
-
-/***/ }),
-
-/***/ "./node_modules/dom-helpers/esm/hasClass.js":
-/*!**************************************************!*\
-  !*** ./node_modules/dom-helpers/esm/hasClass.js ***!
-  \**************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ hasClass)
-/* harmony export */ });
-/**
- * Checks if a given element has a CSS class.
- * 
- * @param element the element
- * @param className the CSS class name
- */
-function hasClass(element, className) {
-  if (element.classList) return !!className && element.classList.contains(className);
-  return (" " + (element.className.baseVal || element.className) + " ").indexOf(" " + className + " ") !== -1;
 }
 
 /***/ }),
@@ -14604,65 +13681,6 @@ __webpack_require__.r(__webpack_exports__);
 function ownerWindow(node) {
   var doc = (0,_ownerDocument__WEBPACK_IMPORTED_MODULE_0__["default"])(node);
   return doc && doc.defaultView || window;
-}
-
-/***/ }),
-
-/***/ "./node_modules/dom-helpers/esm/querySelectorAll.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/dom-helpers/esm/querySelectorAll.js ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ qsa)
-/* harmony export */ });
-var toArray = Function.prototype.bind.call(Function.prototype.call, [].slice);
-/**
- * Runs `querySelectorAll` on a given element.
- * 
- * @param element the element
- * @param selector the selector
- */
-
-function qsa(element, selector) {
-  return toArray(element.querySelectorAll(selector));
-}
-
-/***/ }),
-
-/***/ "./node_modules/dom-helpers/esm/removeClass.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/dom-helpers/esm/removeClass.js ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ removeClass)
-/* harmony export */ });
-function replaceClassName(origClass, classToRemove) {
-  return origClass.replace(new RegExp("(^|\\s)" + classToRemove + "(?:\\s|$)", 'g'), '$1').replace(/\s+/g, ' ').replace(/^\s*|\s*$/g, '');
-}
-/**
- * Removes a CSS class from a given element.
- * 
- * @param element the element
- * @param className the CSS class name
- */
-
-
-function removeClass(element, className) {
-  if (element.classList) {
-    element.classList.remove(className);
-  } else if (typeof element.className === 'string') {
-    element.className = replaceClassName(element.className, className);
-  } else {
-    element.setAttribute('class', replaceClassName(element.className && element.className.baseVal || '', className));
-  }
 }
 
 /***/ }),
@@ -32562,111 +31580,6 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./node_modules/prop-types-extra/lib/all.js":
-/*!**************************************************!*\
-  !*** ./node_modules/prop-types-extra/lib/all.js ***!
-  \**************************************************/
-/***/ ((module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = all;
-
-var _createChainableTypeChecker = __webpack_require__(/*! ./utils/createChainableTypeChecker */ "./node_modules/prop-types-extra/lib/utils/createChainableTypeChecker.js");
-
-var _createChainableTypeChecker2 = _interopRequireDefault(_createChainableTypeChecker);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function all() {
-  for (var _len = arguments.length, validators = Array(_len), _key = 0; _key < _len; _key++) {
-    validators[_key] = arguments[_key];
-  }
-
-  function allPropTypes() {
-    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
-    }
-
-    var error = null;
-
-    validators.forEach(function (validator) {
-      if (error != null) {
-        return;
-      }
-
-      var result = validator.apply(undefined, args);
-      if (result != null) {
-        error = result;
-      }
-    });
-
-    return error;
-  }
-
-  return (0, _createChainableTypeChecker2.default)(allPropTypes);
-}
-module.exports = exports['default'];
-
-/***/ }),
-
-/***/ "./node_modules/prop-types-extra/lib/utils/createChainableTypeChecker.js":
-/*!*******************************************************************************!*\
-  !*** ./node_modules/prop-types-extra/lib/utils/createChainableTypeChecker.js ***!
-  \*******************************************************************************/
-/***/ ((module, exports) => {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = createChainableTypeChecker;
-/**
- * Copyright 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- */
-
-// Mostly taken from ReactPropTypes.
-
-function createChainableTypeChecker(validate) {
-  function checkType(isRequired, props, propName, componentName, location, propFullName) {
-    var componentNameSafe = componentName || '<<anonymous>>';
-    var propFullNameSafe = propFullName || propName;
-
-    if (props[propName] == null) {
-      if (isRequired) {
-        return new Error('Required ' + location + ' `' + propFullNameSafe + '` was not specified ' + ('in `' + componentNameSafe + '`.'));
-      }
-
-      return null;
-    }
-
-    for (var _len = arguments.length, args = Array(_len > 6 ? _len - 6 : 0), _key = 6; _key < _len; _key++) {
-      args[_key - 6] = arguments[_key];
-    }
-
-    return validate.apply(undefined, [props, propName, componentNameSafe, location, propFullNameSafe].concat(args));
-  }
-
-  var chainedCheckType = checkType.bind(null, false);
-  chainedCheckType.isRequired = checkType.bind(null, true);
-
-  return chainedCheckType;
-}
-module.exports = exports['default'];
-
-/***/ }),
-
 /***/ "./node_modules/prop-types/checkPropTypes.js":
 /*!***************************************************!*\
   !*** ./node_modules/prop-types/checkPropTypes.js ***!
@@ -33430,10 +32343,10 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
-/***/ "./node_modules/react-bootstrap/esm/AbstractModalHeader.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/AbstractModalHeader.js ***!
-  \*****************************************************************/
+/***/ "./node_modules/react-bootstrap/esm/Alert.js":
+/*!***************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/Alert.js ***!
+  \***************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -33441,11 +32354,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @restart/hooks/useEventCallback */ "./node_modules/@restart/hooks/esm/useEventCallback.js");
-/* harmony import */ var _CloseButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CloseButton */ "./node_modules/react-bootstrap/esm/CloseButton.js");
-/* harmony import */ var _ModalContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ModalContext */ "./node_modules/react-bootstrap/esm/ModalContext.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var uncontrollable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! uncontrollable */ "./node_modules/uncontrollable/lib/esm/index.js");
+/* harmony import */ var _restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @restart/hooks/useEventCallback */ "./node_modules/@restart/hooks/esm/useEventCallback.js");
+/* harmony import */ var _restart_ui_Anchor__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @restart/ui/Anchor */ "./node_modules/@restart/ui/esm/Anchor.js");
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
+/* harmony import */ var _Fade__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Fade */ "./node_modules/react-bootstrap/esm/Fade.js");
+/* harmony import */ var _CloseButton__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./CloseButton */ "./node_modules/react-bootstrap/esm/CloseButton.js");
+/* harmony import */ var _divWithClassName__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./divWithClassName */ "./node_modules/react-bootstrap/esm/divWithClassName.js");
+/* harmony import */ var _createWithBsPrefix__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./createWithBsPrefix */ "./node_modules/react-bootstrap/esm/createWithBsPrefix.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
@@ -33453,119 +32373,76 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+const DivStyledAsH4 = (0,_divWithClassName__WEBPACK_IMPORTED_MODULE_5__["default"])('h4');
+DivStyledAsH4.displayName = 'DivStyledAsH4';
+const AlertHeading = (0,_createWithBsPrefix__WEBPACK_IMPORTED_MODULE_6__["default"])('alert-heading', {
+  Component: DivStyledAsH4
+});
+const AlertLink = (0,_createWithBsPrefix__WEBPACK_IMPORTED_MODULE_6__["default"])('alert-link', {
+  Component: _restart_ui_Anchor__WEBPACK_IMPORTED_MODULE_7__["default"]
+});
 const defaultProps = {
-  closeLabel: 'Close',
-  closeButton: false
+  variant: 'primary',
+  show: true,
+  transition: _Fade__WEBPACK_IMPORTED_MODULE_8__["default"],
+  closeLabel: 'Close alert'
 };
-const AbstractModalHeader = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(({
-  closeLabel,
-  closeVariant,
-  closeButton,
-  onHide,
-  children,
-  ...props
-}, ref) => {
-  const context = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_ModalContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
-  const handleClick = (0,_restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_1__["default"])(() => {
-    context == null ? void 0 : context.onHide();
-    onHide == null ? void 0 : onHide();
+const Alert = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef((uncontrolledProps, ref) => {
+  const {
+    bsPrefix,
+    show,
+    closeLabel,
+    closeVariant,
+    className,
+    children,
+    variant,
+    onClose,
+    dismissible,
+    transition,
+    ...props
+  } = (0,uncontrollable__WEBPACK_IMPORTED_MODULE_2__.useUncontrolled)(uncontrolledProps, {
+    show: 'onClose'
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+  const prefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_9__.useBootstrapPrefix)(bsPrefix, 'alert');
+  const handleClose = (0,_restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_3__["default"])(e => {
+    if (onClose) {
+      onClose(false, e);
+    }
+  });
+  const Transition = transition === true ? _Fade__WEBPACK_IMPORTED_MODULE_8__["default"] : transition;
+
+  const alert = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)("div", {
+    role: "alert",
+    ...(!Transition ? props : undefined),
     ref: ref,
-    ...props,
-    children: [children, closeButton && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_CloseButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, prefix, variant && `${prefix}-${variant}`, dismissible && `${prefix}-dismissible`),
+    children: [dismissible && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_CloseButton__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      onClick: handleClose,
       "aria-label": closeLabel,
-      variant: closeVariant,
-      onClick: handleClick
-    })]
+      variant: closeVariant
+    }), children]
+  });
+
+  if (!Transition) return show ? alert : null;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Transition, {
+    unmountOnExit: true,
+    ...props,
+    ref: undefined,
+    in: show,
+    children: alert
   });
 });
-AbstractModalHeader.defaultProps = defaultProps;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AbstractModalHeader);
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/BootstrapModalManager.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/BootstrapModalManager.js ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "getSharedManager": () => (/* binding */ getSharedManager),
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var dom_helpers_addClass__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dom-helpers/addClass */ "./node_modules/dom-helpers/esm/addClass.js");
-/* harmony import */ var dom_helpers_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! dom-helpers/css */ "./node_modules/dom-helpers/esm/css.js");
-/* harmony import */ var dom_helpers_querySelectorAll__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dom-helpers/querySelectorAll */ "./node_modules/dom-helpers/esm/querySelectorAll.js");
-/* harmony import */ var dom_helpers_removeClass__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! dom-helpers/removeClass */ "./node_modules/dom-helpers/esm/removeClass.js");
-/* harmony import */ var _restart_ui_ModalManager__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @restart/ui/ModalManager */ "./node_modules/@restart/ui/esm/ModalManager.js");
-
-
-
-
-
-const Selector = {
-  FIXED_CONTENT: '.fixed-top, .fixed-bottom, .is-fixed, .sticky-top',
-  STICKY_CONTENT: '.sticky-top',
-  NAVBAR_TOGGLER: '.navbar-toggler'
-};
-
-class BootstrapModalManager extends _restart_ui_ModalManager__WEBPACK_IMPORTED_MODULE_4__["default"] {
-  adjustAndStore(prop, element, adjust) {
-    const actual = element.style[prop]; // TODO: DOMStringMap and CSSStyleDeclaration aren't strictly compatible
-    // @ts-ignore
-
-    element.dataset[prop] = actual;
-    (0,dom_helpers_css__WEBPACK_IMPORTED_MODULE_1__["default"])(element, {
-      [prop]: `${parseFloat((0,dom_helpers_css__WEBPACK_IMPORTED_MODULE_1__["default"])(element, prop)) + adjust}px`
-    });
-  }
-
-  restore(prop, element) {
-    const value = element.dataset[prop];
-
-    if (value !== undefined) {
-      delete element.dataset[prop];
-      (0,dom_helpers_css__WEBPACK_IMPORTED_MODULE_1__["default"])(element, {
-        [prop]: value
-      });
-    }
-  }
-
-  setContainerStyle(containerState) {
-    super.setContainerStyle(containerState);
-    const container = this.getElement();
-    (0,dom_helpers_addClass__WEBPACK_IMPORTED_MODULE_0__["default"])(container, 'modal-open');
-    if (!containerState.scrollBarWidth) return;
-    const paddingProp = this.isRTL ? 'paddingLeft' : 'paddingRight';
-    const marginProp = this.isRTL ? 'marginLeft' : 'marginRight';
-    (0,dom_helpers_querySelectorAll__WEBPACK_IMPORTED_MODULE_2__["default"])(container, Selector.FIXED_CONTENT).forEach(el => this.adjustAndStore(paddingProp, el, containerState.scrollBarWidth));
-    (0,dom_helpers_querySelectorAll__WEBPACK_IMPORTED_MODULE_2__["default"])(container, Selector.STICKY_CONTENT).forEach(el => this.adjustAndStore(marginProp, el, -containerState.scrollBarWidth));
-    (0,dom_helpers_querySelectorAll__WEBPACK_IMPORTED_MODULE_2__["default"])(container, Selector.NAVBAR_TOGGLER).forEach(el => this.adjustAndStore(marginProp, el, containerState.scrollBarWidth));
-  }
-
-  removeContainerStyle(containerState) {
-    super.removeContainerStyle(containerState);
-    const container = this.getElement();
-    (0,dom_helpers_removeClass__WEBPACK_IMPORTED_MODULE_3__["default"])(container, 'modal-open');
-    const paddingProp = this.isRTL ? 'paddingLeft' : 'paddingRight';
-    const marginProp = this.isRTL ? 'marginLeft' : 'marginRight';
-    (0,dom_helpers_querySelectorAll__WEBPACK_IMPORTED_MODULE_2__["default"])(container, Selector.FIXED_CONTENT).forEach(el => this.restore(paddingProp, el));
-    (0,dom_helpers_querySelectorAll__WEBPACK_IMPORTED_MODULE_2__["default"])(container, Selector.STICKY_CONTENT).forEach(el => this.restore(marginProp, el));
-    (0,dom_helpers_querySelectorAll__WEBPACK_IMPORTED_MODULE_2__["default"])(container, Selector.NAVBAR_TOGGLER).forEach(el => this.restore(marginProp, el));
-  }
-
-}
-
-let sharedManager;
-function getSharedManager(options) {
-  if (!sharedManager) sharedManager = new BootstrapModalManager(options);
-  return sharedManager;
-}
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BootstrapModalManager);
+Alert.displayName = 'Alert';
+Alert.defaultProps = defaultProps;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Object.assign(Alert, {
+  Link: AlertLink,
+  Heading: AlertHeading
+}));
 
 /***/ }),
 
@@ -33672,25 +32549,6 @@ ButtonGroup.defaultProps = defaultProps;
 
 /***/ }),
 
-/***/ "./node_modules/react-bootstrap/esm/CardHeaderContext.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/CardHeaderContext.js ***!
-  \***************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const context = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(null);
-context.displayName = 'CardHeaderContext';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (context);
-
-/***/ }),
-
 /***/ "./node_modules/react-bootstrap/esm/CloseButton.js":
 /*!*********************************************************!*\
   !*** ./node_modules/react-bootstrap/esm/CloseButton.js ***!
@@ -33743,131 +32601,16 @@ CloseButton.defaultProps = defaultProps;
 
 /***/ }),
 
-/***/ "./node_modules/react-bootstrap/esm/Collapse.js":
-/*!******************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/Collapse.js ***!
-  \******************************************************/
+/***/ "./node_modules/react-bootstrap/esm/Col.js":
+/*!*************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/Col.js ***!
+  \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var dom_helpers_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! dom-helpers/css */ "./node_modules/dom-helpers/esm/css.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-transition-group/Transition */ "./node_modules/react-transition-group/esm/Transition.js");
-/* harmony import */ var _transitionEndListener__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./transitionEndListener */ "./node_modules/react-bootstrap/esm/transitionEndListener.js");
-/* harmony import */ var _createChainedFunction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./createChainedFunction */ "./node_modules/react-bootstrap/esm/createChainedFunction.js");
-/* harmony import */ var _triggerBrowserReflow__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./triggerBrowserReflow */ "./node_modules/react-bootstrap/esm/triggerBrowserReflow.js");
-/* harmony import */ var _TransitionWrapper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./TransitionWrapper */ "./node_modules/react-bootstrap/esm/TransitionWrapper.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-
-
-
-
-
-
-
-const MARGINS = {
-  height: ['marginTop', 'marginBottom'],
-  width: ['marginLeft', 'marginRight']
-};
-
-function getDefaultDimensionValue(dimension, elem) {
-  const offset = `offset${dimension[0].toUpperCase()}${dimension.slice(1)}`;
-  const value = elem[offset];
-  const margins = MARGINS[dimension];
-  return value + // @ts-ignore
-  parseInt((0,dom_helpers_css__WEBPACK_IMPORTED_MODULE_1__["default"])(elem, margins[0]), 10) + // @ts-ignore
-  parseInt((0,dom_helpers_css__WEBPACK_IMPORTED_MODULE_1__["default"])(elem, margins[1]), 10);
-}
-
-const collapseStyles = {
-  [react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_4__.EXITED]: 'collapse',
-  [react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_4__.EXITING]: 'collapsing',
-  [react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_4__.ENTERING]: 'collapsing',
-  [react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_4__.ENTERED]: 'collapse show'
-};
-const defaultProps = {
-  in: false,
-  timeout: 300,
-  mountOnEnter: false,
-  unmountOnExit: false,
-  appear: false,
-  getDimensionValue: getDefaultDimensionValue
-};
-const Collapse = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.forwardRef(({
-  onEnter,
-  onEntering,
-  onEntered,
-  onExit,
-  onExiting,
-  className,
-  children,
-  dimension = 'height',
-  getDimensionValue = getDefaultDimensionValue,
-  ...props
-}, ref) => {
-  /* Compute dimension */
-  const computedDimension = typeof dimension === 'function' ? dimension() : dimension;
-  /* -- Expanding -- */
-
-  const handleEnter = (0,react__WEBPACK_IMPORTED_MODULE_2__.useMemo)(() => (0,_createChainedFunction__WEBPACK_IMPORTED_MODULE_5__["default"])(elem => {
-    elem.style[computedDimension] = '0';
-  }, onEnter), [computedDimension, onEnter]);
-  const handleEntering = (0,react__WEBPACK_IMPORTED_MODULE_2__.useMemo)(() => (0,_createChainedFunction__WEBPACK_IMPORTED_MODULE_5__["default"])(elem => {
-    const scroll = `scroll${computedDimension[0].toUpperCase()}${computedDimension.slice(1)}`;
-    elem.style[computedDimension] = `${elem[scroll]}px`;
-  }, onEntering), [computedDimension, onEntering]);
-  const handleEntered = (0,react__WEBPACK_IMPORTED_MODULE_2__.useMemo)(() => (0,_createChainedFunction__WEBPACK_IMPORTED_MODULE_5__["default"])(elem => {
-    elem.style[computedDimension] = null;
-  }, onEntered), [computedDimension, onEntered]);
-  /* -- Collapsing -- */
-
-  const handleExit = (0,react__WEBPACK_IMPORTED_MODULE_2__.useMemo)(() => (0,_createChainedFunction__WEBPACK_IMPORTED_MODULE_5__["default"])(elem => {
-    elem.style[computedDimension] = `${getDimensionValue(computedDimension, elem)}px`;
-    (0,_triggerBrowserReflow__WEBPACK_IMPORTED_MODULE_6__["default"])(elem);
-  }, onExit), [onExit, getDimensionValue, computedDimension]);
-  const handleExiting = (0,react__WEBPACK_IMPORTED_MODULE_2__.useMemo)(() => (0,_createChainedFunction__WEBPACK_IMPORTED_MODULE_5__["default"])(elem => {
-    elem.style[computedDimension] = null;
-  }, onExiting), [computedDimension, onExiting]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_TransitionWrapper__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    ref: ref,
-    addEndListener: _transitionEndListener__WEBPACK_IMPORTED_MODULE_8__["default"],
-    ...props,
-    "aria-expanded": props.role ? props.in : null,
-    onEnter: handleEnter,
-    onEntering: handleEntering,
-    onEntered: handleEntered,
-    onExit: handleExit,
-    onExiting: handleExiting,
-    childRef: children.ref,
-    children: (state, innerProps) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.cloneElement(children, { ...innerProps,
-      className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, children.props.className, collapseStyles[state], computedDimension === 'width' && 'collapse-horizontal')
-    })
-  });
-}); // @ts-ignore
-
-// @ts-ignore
-Collapse.defaultProps = defaultProps;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Collapse);
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/Container.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/Container.js ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "useCol": () => (/* binding */ useCol),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
@@ -33879,28 +32622,119 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const defaultProps = {
-  fluid: false
-};
-const Container = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+const DEVICE_SIZES = ['xxl', 'xl', 'lg', 'md', 'sm', 'xs'];
+function useCol({
+  as,
   bsPrefix,
-  fluid,
-  // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-  as: Component = 'div',
   className,
   ...props
-}, ref) => {
-  const prefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_3__.useBootstrapPrefix)(bsPrefix, 'container');
-  const suffix = typeof fluid === 'string' ? `-${fluid}` : '-fluid';
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Component, {
+}) {
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_3__.useBootstrapPrefix)(bsPrefix, 'col');
+  const spans = [];
+  const classes = [];
+  DEVICE_SIZES.forEach(brkPoint => {
+    const propValue = props[brkPoint];
+    delete props[brkPoint];
+    let span;
+    let offset;
+    let order;
+
+    if (typeof propValue === 'object' && propValue != null) {
+      ({
+        span,
+        offset,
+        order
+      } = propValue);
+    } else {
+      span = propValue;
+    }
+
+    const infix = brkPoint !== 'xs' ? `-${brkPoint}` : '';
+    if (span) spans.push(span === true ? `${bsPrefix}${infix}` : `${bsPrefix}${infix}-${span}`);
+    if (order != null) classes.push(`order${infix}-${order}`);
+    if (offset != null) classes.push(`offset${infix}-${offset}`);
+  });
+  return [{ ...props,
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, ...spans, ...classes)
+  }, {
+    as,
+    bsPrefix,
+    spans
+  }];
+}
+const Col = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef( // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+(props, ref) => {
+  const [{
+    className,
+    ...colProps
+  }, {
+    as: Component = 'div',
+    bsPrefix,
+    spans
+  }] = useCol(props);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Component, { ...colProps,
     ref: ref,
-    ...props,
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, fluid ? `${prefix}${suffix}` : prefix)
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, !spans.length && bsPrefix)
   });
 });
-Container.displayName = 'Container';
-Container.defaultProps = defaultProps;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Container);
+Col.displayName = 'Col';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Col);
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/ElementChildren.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/ElementChildren.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "map": () => (/* binding */ map),
+/* harmony export */   "forEach": () => (/* binding */ forEach),
+/* harmony export */   "hasChildOfType": () => (/* binding */ hasChildOfType)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+/**
+ * Iterates through children that are typically specified as `props.children`,
+ * but only maps over children that are "valid elements".
+ *
+ * The mapFunction provided index will be normalised to the components mapped,
+ * so an invalid component would not increase the index.
+ *
+ */
+
+function map(children, func) {
+  let index = 0;
+  return react__WEBPACK_IMPORTED_MODULE_0__.Children.map(children, child => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.isValidElement(child) ? func(child, index++) : child);
+}
+/**
+ * Iterates through children that are "valid elements".
+ *
+ * The provided forEachFunc(child, index) will be called for each
+ * leaf child with the index reflecting the position relative to "valid components".
+ */
+
+
+function forEach(children, func) {
+  let index = 0;
+  react__WEBPACK_IMPORTED_MODULE_0__.Children.forEach(children, child => {
+    if ( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.isValidElement(child)) func(child, index++);
+  });
+}
+/**
+ * Finds whether a component's `children` prop includes a React element of the
+ * specified type.
+ */
+
+
+function hasChildOfType(children, type) {
+  return react__WEBPACK_IMPORTED_MODULE_0__.Children.toArray(children).some(child => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.isValidElement(child) && child.type === type);
+}
+
+
 
 /***/ }),
 
@@ -33969,145 +32803,10 @@ Fade.displayName = 'Fade';
 
 /***/ }),
 
-/***/ "./node_modules/react-bootstrap/esm/ModalContext.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/ModalContext.js ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-const ModalContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext({
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  onHide() {}
-
-});
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ModalContext);
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/Nav.js":
-/*!*************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/Nav.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types_extra_lib_all__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types-extra/lib/all */ "./node_modules/prop-types-extra/lib/all.js");
-/* harmony import */ var prop_types_extra_lib_all__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types_extra_lib_all__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var uncontrollable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! uncontrollable */ "./node_modules/uncontrollable/lib/esm/index.js");
-/* harmony import */ var _restart_ui_Nav__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @restart/ui/Nav */ "./node_modules/@restart/ui/esm/Nav.js");
-/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
-/* harmony import */ var _NavbarContext__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NavbarContext */ "./node_modules/react-bootstrap/esm/NavbarContext.js");
-/* harmony import */ var _CardHeaderContext__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./CardHeaderContext */ "./node_modules/react-bootstrap/esm/CardHeaderContext.js");
-/* harmony import */ var _NavItem__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./NavItem */ "./node_modules/react-bootstrap/esm/NavItem.js");
-/* harmony import */ var _NavLink__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NavLink */ "./node_modules/react-bootstrap/esm/NavLink.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-
-
-
-
-
-
-
-
-
-
-const defaultProps = {
-  justify: false,
-  fill: false
-};
-const Nav = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.forwardRef((uncontrolledProps, ref) => {
-  const {
-    as = 'div',
-    bsPrefix: initialBsPrefix,
-    variant,
-    fill,
-    justify,
-    navbar,
-    navbarScroll,
-    className,
-    activeKey,
-    ...props
-  } = (0,uncontrollable__WEBPACK_IMPORTED_MODULE_3__.useUncontrolled)(uncontrolledProps, {
-    activeKey: 'onSelect'
-  });
-  const bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_5__.useBootstrapPrefix)(initialBsPrefix, 'nav');
-  let navbarBsPrefix;
-  let cardHeaderBsPrefix;
-  let isNavbar = false;
-  const navbarContext = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_NavbarContext__WEBPACK_IMPORTED_MODULE_6__["default"]);
-  const cardHeaderContext = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_CardHeaderContext__WEBPACK_IMPORTED_MODULE_7__["default"]);
-
-  if (navbarContext) {
-    navbarBsPrefix = navbarContext.bsPrefix;
-    isNavbar = navbar == null ? true : navbar;
-  } else if (cardHeaderContext) {
-    ({
-      cardHeaderBsPrefix
-    } = cardHeaderContext);
-  }
-
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_restart_ui_Nav__WEBPACK_IMPORTED_MODULE_8__["default"], {
-    as: as,
-    ref: ref,
-    activeKey: activeKey,
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, {
-      [bsPrefix]: !isNavbar,
-      [`${navbarBsPrefix}-nav`]: isNavbar,
-      [`${navbarBsPrefix}-nav-scroll`]: isNavbar && navbarScroll,
-      [`${cardHeaderBsPrefix}-${variant}`]: !!cardHeaderBsPrefix,
-      [`${bsPrefix}-${variant}`]: !!variant,
-      [`${bsPrefix}-fill`]: fill,
-      [`${bsPrefix}-justified`]: justify
-    }),
-    ...props
-  });
-});
-Nav.displayName = 'Nav';
-Nav.defaultProps = defaultProps;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Object.assign(Nav, {
-  Item: _NavItem__WEBPACK_IMPORTED_MODULE_9__["default"],
-  Link: _NavLink__WEBPACK_IMPORTED_MODULE_10__["default"]
-}));
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/NavItem.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/NavItem.js ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _createWithBsPrefix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createWithBsPrefix */ "./node_modules/react-bootstrap/esm/createWithBsPrefix.js");
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_createWithBsPrefix__WEBPACK_IMPORTED_MODULE_0__["default"])('nav-item'));
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/NavLink.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/NavLink.js ***!
-  \*****************************************************/
+/***/ "./node_modules/react-bootstrap/esm/Feedback.js":
+/*!******************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/Feedback.js ***!
+  \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -34118,10 +32817,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _restart_ui_Anchor__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @restart/ui/Anchor */ "./node_modules/@restart/ui/esm/Anchor.js");
-/* harmony import */ var _restart_ui_NavItem__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @restart/ui/NavItem */ "./node_modules/@restart/ui/esm/NavItem.js");
-/* harmony import */ var _restart_ui_SelectableContext__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @restart/ui/SelectableContext */ "./node_modules/@restart/ui/esm/SelectableContext.js");
-/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+const propTypes = {
+  /**
+   * Specify whether the feedback is for valid or invalid fields
+   *
+   * @type {('valid'|'invalid')}
+   */
+  type: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().string),
+
+  /** Display feedback as a tooltip. */
+  tooltip: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().bool),
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_2___default().elementType)
+};
+const Feedback = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef( // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+({
+  as: Component = 'div',
+  className,
+  type = 'valid',
+  tooltip = false,
+  ...props
+}, ref) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Component, { ...props,
+  ref: ref,
+  className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, `${type}-${tooltip ? 'tooltip' : 'feedback'}`)
+}));
+Feedback.displayName = 'Feedback';
+Feedback.propTypes = propTypes;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Feedback);
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/FloatingLabel.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/FloatingLabel.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _FormGroup__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FormGroup */ "./node_modules/react-bootstrap/esm/FormGroup.js");
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -34129,40 +32876,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-const defaultProps = {
-  disabled: false
-};
-const NavLink = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+const FloatingLabel = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
   bsPrefix,
   className,
-  as: Component = _restart_ui_Anchor__WEBPACK_IMPORTED_MODULE_3__["default"],
-  active,
-  eventKey,
+  children,
+  controlId,
+  label,
   ...props
 }, ref) => {
-  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_4__.useBootstrapPrefix)(bsPrefix, 'nav-link');
-  const [navItemProps, meta] = (0,_restart_ui_NavItem__WEBPACK_IMPORTED_MODULE_5__.useNavItem)({
-    key: (0,_restart_ui_SelectableContext__WEBPACK_IMPORTED_MODULE_6__.makeEventKey)(eventKey, props.href),
-    active,
-    ...props
-  });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Component, { ...props,
-    ...navItemProps,
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_3__.useBootstrapPrefix)(bsPrefix, 'form-floating');
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(_FormGroup__WEBPACK_IMPORTED_MODULE_4__["default"], {
     ref: ref,
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix, props.disabled && 'disabled', meta.isActive && 'active')
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix),
+    controlId: controlId,
+    ...props,
+    children: [children, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", {
+      htmlFor: controlId,
+      children: label
+    })]
   });
 });
-NavLink.displayName = 'NavLink';
-NavLink.defaultProps = defaultProps;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NavLink);
+FloatingLabel.displayName = 'FloatingLabel';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FloatingLabel);
 
 /***/ }),
 
-/***/ "./node_modules/react-bootstrap/esm/Navbar.js":
-/*!****************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/Navbar.js ***!
-  \****************************************************/
+/***/ "./node_modules/react-bootstrap/esm/Form.js":
+/*!**************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/Form.js ***!
+  \**************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -34172,16 +32914,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _restart_ui_SelectableContext__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @restart/ui/SelectableContext */ "./node_modules/@restart/ui/esm/SelectableContext.js");
-/* harmony import */ var uncontrollable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! uncontrollable */ "./node_modules/uncontrollable/lib/esm/index.js");
-/* harmony import */ var _createWithBsPrefix__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./createWithBsPrefix */ "./node_modules/react-bootstrap/esm/createWithBsPrefix.js");
-/* harmony import */ var _NavbarBrand__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NavbarBrand */ "./node_modules/react-bootstrap/esm/NavbarBrand.js");
-/* harmony import */ var _NavbarCollapse__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./NavbarCollapse */ "./node_modules/react-bootstrap/esm/NavbarCollapse.js");
-/* harmony import */ var _NavbarToggle__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./NavbarToggle */ "./node_modules/react-bootstrap/esm/NavbarToggle.js");
-/* harmony import */ var _NavbarOffcanvas__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NavbarOffcanvas */ "./node_modules/react-bootstrap/esm/NavbarOffcanvas.js");
-/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
-/* harmony import */ var _NavbarContext__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./NavbarContext */ "./node_modules/react-bootstrap/esm/NavbarContext.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _FormCheck__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./FormCheck */ "./node_modules/react-bootstrap/esm/FormCheck.js");
+/* harmony import */ var _FormControl__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./FormControl */ "./node_modules/react-bootstrap/esm/FormControl.js");
+/* harmony import */ var _FormFloating__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FormFloating */ "./node_modules/react-bootstrap/esm/FormFloating.js");
+/* harmony import */ var _FormGroup__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FormGroup */ "./node_modules/react-bootstrap/esm/FormGroup.js");
+/* harmony import */ var _FormLabel__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./FormLabel */ "./node_modules/react-bootstrap/esm/FormLabel.js");
+/* harmony import */ var _FormRange__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./FormRange */ "./node_modules/react-bootstrap/esm/FormRange.js");
+/* harmony import */ var _FormSelect__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./FormSelect */ "./node_modules/react-bootstrap/esm/FormSelect.js");
+/* harmony import */ var _FormText__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./FormText */ "./node_modules/react-bootstrap/esm/FormText.js");
+/* harmony import */ var _Switch__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Switch */ "./node_modules/react-bootstrap/esm/Switch.js");
+/* harmony import */ var _FloatingLabel__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./FloatingLabel */ "./node_modules/react-bootstrap/esm/FloatingLabel.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -34196,82 +32941,267 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const NavbarText = (0,_createWithBsPrefix__WEBPACK_IMPORTED_MODULE_4__["default"])('navbar-text', {
-  Component: 'span'
-});
-const defaultProps = {
-  expand: true,
-  variant: 'light',
-  collapseOnSelect: false
+
+const propTypes = {
+  /**
+   * The Form `ref` will be forwarded to the underlying element,
+   * which means, unless it's rendered `as` a composite component,
+   * it will be a DOM node, when resolved.
+   *
+   * @type {ReactRef}
+   * @alias ref
+   */
+  _ref: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().any),
+
+  /**
+   * Mark a form as having been validated. Setting it to `true` will
+   * toggle any validation styles on the forms elements.
+   */
+  validated: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().bool),
+  as: (prop_types__WEBPACK_IMPORTED_MODULE_1___default().elementType)
 };
-const Navbar = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef((props, ref) => {
-  const {
-    bsPrefix: initialBsPrefix,
-    expand,
-    variant,
-    bg,
-    fixed,
-    sticky,
-    className,
-    // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-    as: Component = 'nav',
-    expanded,
-    onToggle,
-    onSelect,
-    collapseOnSelect,
-    ...controlledProps
-  } = (0,uncontrollable__WEBPACK_IMPORTED_MODULE_2__.useUncontrolled)(props, {
-    expanded: 'onToggle'
-  });
-  const bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_5__.useBootstrapPrefix)(initialBsPrefix, 'navbar');
-  const handleCollapse = (0,react__WEBPACK_IMPORTED_MODULE_1__.useCallback)((...args) => {
-    onSelect == null ? void 0 : onSelect(...args);
-
-    if (collapseOnSelect && expanded) {
-      onToggle == null ? void 0 : onToggle(false);
-    }
-  }, [onSelect, collapseOnSelect, expanded, onToggle]); // will result in some false positives but that seems better
-  // than false negatives. strict `undefined` check allows explicit
-  // "nulling" of the role if the user really doesn't want one
-
-  if (controlledProps.role === undefined && Component !== 'nav') {
-    controlledProps.role = 'navigation';
-  }
-
-  let expandClass = `${bsPrefix}-expand`;
-  if (typeof expand === 'string') expandClass = `${expandClass}-${expand}`;
-  const navbarContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => ({
-    onToggle: () => onToggle == null ? void 0 : onToggle(!expanded),
-    bsPrefix,
-    expanded: !!expanded
-  }), [bsPrefix, expanded, onToggle]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_NavbarContext__WEBPACK_IMPORTED_MODULE_6__["default"].Provider, {
-    value: navbarContext,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_restart_ui_SelectableContext__WEBPACK_IMPORTED_MODULE_7__["default"].Provider, {
-      value: handleCollapse,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Component, {
-        ref: ref,
-        ...controlledProps,
-        className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix, expand && expandClass, variant && `${bsPrefix}-${variant}`, bg && `bg-${bg}`, sticky && `sticky-${sticky}`, fixed && `fixed-${fixed}`)
-      })
-    })
-  });
-});
-Navbar.defaultProps = defaultProps;
-Navbar.displayName = 'Navbar';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Object.assign(Navbar, {
-  Brand: _NavbarBrand__WEBPACK_IMPORTED_MODULE_8__["default"],
-  Collapse: _NavbarCollapse__WEBPACK_IMPORTED_MODULE_9__["default"],
-  Offcanvas: _NavbarOffcanvas__WEBPACK_IMPORTED_MODULE_10__["default"],
-  Text: NavbarText,
-  Toggle: _NavbarToggle__WEBPACK_IMPORTED_MODULE_11__["default"]
+const Form = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.forwardRef(({
+  className,
+  validated,
+  // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+  as: Component = 'form',
+  ...props
+}, ref) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Component, { ...props,
+  ref: ref,
+  className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, validated && 'was-validated')
+}));
+Form.displayName = 'Form';
+Form.propTypes = propTypes;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Object.assign(Form, {
+  Group: _FormGroup__WEBPACK_IMPORTED_MODULE_4__["default"],
+  Control: _FormControl__WEBPACK_IMPORTED_MODULE_5__["default"],
+  Floating: _FormFloating__WEBPACK_IMPORTED_MODULE_6__["default"],
+  Check: _FormCheck__WEBPACK_IMPORTED_MODULE_7__["default"],
+  Switch: _Switch__WEBPACK_IMPORTED_MODULE_8__["default"],
+  Label: _FormLabel__WEBPACK_IMPORTED_MODULE_9__["default"],
+  Text: _FormText__WEBPACK_IMPORTED_MODULE_10__["default"],
+  Range: _FormRange__WEBPACK_IMPORTED_MODULE_11__["default"],
+  Select: _FormSelect__WEBPACK_IMPORTED_MODULE_12__["default"],
+  FloatingLabel: _FloatingLabel__WEBPACK_IMPORTED_MODULE_13__["default"]
 }));
 
 /***/ }),
 
-/***/ "./node_modules/react-bootstrap/esm/NavbarBrand.js":
+/***/ "./node_modules/react-bootstrap/esm/FormCheck.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/FormCheck.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Feedback__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Feedback */ "./node_modules/react-bootstrap/esm/Feedback.js");
+/* harmony import */ var _FormCheckInput__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./FormCheckInput */ "./node_modules/react-bootstrap/esm/FormCheckInput.js");
+/* harmony import */ var _FormCheckLabel__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./FormCheckLabel */ "./node_modules/react-bootstrap/esm/FormCheckLabel.js");
+/* harmony import */ var _FormContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FormContext */ "./node_modules/react-bootstrap/esm/FormContext.js");
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
+/* harmony import */ var _ElementChildren__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ElementChildren */ "./node_modules/react-bootstrap/esm/ElementChildren.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+
+
+
+
+
+
+const FormCheck = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+  id,
+  bsPrefix,
+  bsSwitchPrefix,
+  inline = false,
+  disabled = false,
+  isValid = false,
+  isInvalid = false,
+  feedbackTooltip = false,
+  feedback,
+  feedbackType,
+  className,
+  style,
+  title = '',
+  type = 'checkbox',
+  label,
+  children,
+  // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+  as = 'input',
+  ...props
+}, ref) => {
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_3__.useBootstrapPrefix)(bsPrefix, 'form-check');
+  bsSwitchPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_3__.useBootstrapPrefix)(bsSwitchPrefix, 'form-switch');
+  const {
+    controlId
+  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_FormContext__WEBPACK_IMPORTED_MODULE_4__["default"]);
+  const innerFormContext = (0,react__WEBPACK_IMPORTED_MODULE_1__.useMemo)(() => ({
+    controlId: id || controlId
+  }), [controlId, id]);
+  const hasLabel = !children && label != null && label !== false || (0,_ElementChildren__WEBPACK_IMPORTED_MODULE_5__.hasChildOfType)(children, _FormCheckLabel__WEBPACK_IMPORTED_MODULE_6__["default"]);
+
+  const input = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_FormCheckInput__WEBPACK_IMPORTED_MODULE_7__["default"], { ...props,
+    type: type === 'switch' ? 'checkbox' : type,
+    ref: ref,
+    isValid: isValid,
+    isInvalid: isInvalid,
+    disabled: disabled,
+    as: as
+  });
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_FormContext__WEBPACK_IMPORTED_MODULE_4__["default"].Provider, {
+    value: innerFormContext,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      style: style,
+      className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, hasLabel && bsPrefix, inline && `${bsPrefix}-inline`, type === 'switch' && bsSwitchPrefix),
+      children: children || /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+        children: [input, hasLabel && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_FormCheckLabel__WEBPACK_IMPORTED_MODULE_6__["default"], {
+          title: title,
+          children: label
+        }), feedback && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Feedback__WEBPACK_IMPORTED_MODULE_8__["default"], {
+          type: feedbackType,
+          tooltip: feedbackTooltip,
+          children: feedback
+        })]
+      })
+    })
+  });
+});
+FormCheck.displayName = 'FormCheck';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Object.assign(FormCheck, {
+  Input: _FormCheckInput__WEBPACK_IMPORTED_MODULE_7__["default"],
+  Label: _FormCheckLabel__WEBPACK_IMPORTED_MODULE_6__["default"]
+}));
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/FormCheckInput.js":
+/*!************************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/FormCheckInput.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _FormContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FormContext */ "./node_modules/react-bootstrap/esm/FormContext.js");
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+const FormCheckInput = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+  id,
+  bsPrefix,
+  className,
+  type = 'checkbox',
+  isValid = false,
+  isInvalid = false,
+  // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+  as: Component = 'input',
+  ...props
+}, ref) => {
+  const {
+    controlId
+  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_FormContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_4__.useBootstrapPrefix)(bsPrefix, 'form-check-input');
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Component, { ...props,
+    ref: ref,
+    type: type,
+    id: id || controlId,
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix, isValid && 'is-valid', isInvalid && 'is-invalid')
+  });
+});
+FormCheckInput.displayName = 'FormCheckInput';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormCheckInput);
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/FormCheckLabel.js":
+/*!************************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/FormCheckLabel.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _FormContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FormContext */ "./node_modules/react-bootstrap/esm/FormContext.js");
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+const FormCheckLabel = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+  bsPrefix,
+  className,
+  htmlFor,
+  ...props
+}, ref) => {
+  const {
+    controlId
+  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_FormContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_4__.useBootstrapPrefix)(bsPrefix, 'form-check-label');
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("label", { ...props,
+    ref: ref,
+    htmlFor: htmlFor || controlId,
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix)
+  });
+});
+FormCheckLabel.displayName = 'FormCheckLabel';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormCheckLabel);
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/FormContext.js":
 /*!*********************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/NavbarBrand.js ***!
+  !*** ./node_modules/react-bootstrap/esm/FormContext.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+ // TODO
+
+const FormContext = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormContext);
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/FormControl.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/FormControl.js ***!
   \*********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -34283,144 +33213,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-
-
-const NavbarBrand = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
-  bsPrefix,
-  className,
-  as,
-  ...props
-}, ref) => {
-  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_3__.useBootstrapPrefix)(bsPrefix, 'navbar-brand');
-  const Component = as || (props.href ? 'a' : 'span');
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Component, { ...props,
-    ref: ref,
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix)
-  });
-});
-NavbarBrand.displayName = 'NavbarBrand';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NavbarBrand);
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/NavbarCollapse.js":
-/*!************************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/NavbarCollapse.js ***!
-  \************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Collapse__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Collapse */ "./node_modules/react-bootstrap/esm/Collapse.js");
-/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
-/* harmony import */ var _NavbarContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NavbarContext */ "./node_modules/react-bootstrap/esm/NavbarContext.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-
-
-
-
-const NavbarCollapse = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(({
-  children,
-  bsPrefix,
-  ...props
-}, ref) => {
-  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_2__.useBootstrapPrefix)(bsPrefix, 'navbar-collapse');
-  const context = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_NavbarContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_Collapse__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    in: !!(context && context.expanded),
-    ...props,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-      ref: ref,
-      className: bsPrefix,
-      children: children
-    })
-  });
-});
-NavbarCollapse.displayName = 'NavbarCollapse';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NavbarCollapse);
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/NavbarContext.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/NavbarContext.js ***!
-  \***********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
- // TODO: check
-
-const context = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createContext(null);
-context.displayName = 'NavbarContext';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (context);
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/NavbarOffcanvas.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/NavbarOffcanvas.js ***!
-  \*************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Offcanvas__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Offcanvas */ "./node_modules/react-bootstrap/esm/Offcanvas.js");
-/* harmony import */ var _NavbarContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NavbarContext */ "./node_modules/react-bootstrap/esm/NavbarContext.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-
-
-
-const NavbarOffcanvas = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((props, ref) => {
-  const context = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_NavbarContext__WEBPACK_IMPORTED_MODULE_2__["default"]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_Offcanvas__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    ref: ref,
-    show: !!(context != null && context.expanded),
-    ...props
-  });
-});
-NavbarOffcanvas.displayName = 'NavbarOffcanvas';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NavbarOffcanvas);
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/NavbarToggle.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/NavbarToggle.js ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @restart/hooks/useEventCallback */ "./node_modules/@restart/hooks/esm/useEventCallback.js");
-/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
-/* harmony import */ var _NavbarContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NavbarContext */ "./node_modules/react-bootstrap/esm/NavbarContext.js");
+/* harmony import */ var warning__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! warning */ "./node_modules/warning/warning.js");
+/* harmony import */ var warning__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(warning__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Feedback__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Feedback */ "./node_modules/react-bootstrap/esm/Feedback.js");
+/* harmony import */ var _FormContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FormContext */ "./node_modules/react-bootstrap/esm/FormContext.js");
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -34429,52 +33226,115 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const defaultProps = {
-  label: 'Toggle navigation'
-};
-const NavbarToggle = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+
+const FormControl = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
   bsPrefix,
+  type,
+  size,
+  htmlSize,
+  id,
   className,
-  children,
-  label,
+  isValid = false,
+  isInvalid = false,
+  plaintext,
+  readOnly,
   // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
-  as: Component = 'button',
-  onClick,
+  as: Component = 'input',
   ...props
 }, ref) => {
-  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_4__.useBootstrapPrefix)(bsPrefix, 'navbar-toggler');
   const {
-    onToggle,
-    expanded
-  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_NavbarContext__WEBPACK_IMPORTED_MODULE_5__["default"]) || {};
-  const handleClick = (0,_restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_2__["default"])(e => {
-    if (onClick) onClick(e);
-    if (onToggle) onToggle();
-  });
+    controlId
+  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_FormContext__WEBPACK_IMPORTED_MODULE_4__["default"]);
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_5__.useBootstrapPrefix)(bsPrefix, 'form-control');
+  let classes;
 
-  if (Component === 'button') {
-    props.type = 'button';
+  if (plaintext) {
+    classes = {
+      [`${bsPrefix}-plaintext`]: true
+    };
+  } else {
+    classes = {
+      [bsPrefix]: true,
+      [`${bsPrefix}-${size}`]: size
+    };
   }
 
+   true ? warning__WEBPACK_IMPORTED_MODULE_2___default()(controlId == null || !id, '`controlId` is ignored on `<FormControl>` when `id` is specified.') : 0;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Component, { ...props,
+    type: type,
+    size: htmlSize,
     ref: ref,
-    onClick: handleClick,
-    "aria-label": label,
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix, !expanded && 'collapsed'),
-    children: children || /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("span", {
-      className: `${bsPrefix}-icon`
-    })
+    readOnly: readOnly,
+    id: id || controlId,
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, classes, isValid && `is-valid`, isInvalid && `is-invalid`, type === 'color' && `${bsPrefix}-color`)
   });
 });
-NavbarToggle.displayName = 'NavbarToggle';
-NavbarToggle.defaultProps = defaultProps;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NavbarToggle);
+FormControl.displayName = 'FormControl';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Object.assign(FormControl, {
+  Feedback: _Feedback__WEBPACK_IMPORTED_MODULE_6__["default"]
+}));
 
 /***/ }),
 
-/***/ "./node_modules/react-bootstrap/esm/Offcanvas.js":
+/***/ "./node_modules/react-bootstrap/esm/FormFloating.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/FormFloating.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _createWithBsPrefix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createWithBsPrefix */ "./node_modules/react-bootstrap/esm/createWithBsPrefix.js");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_createWithBsPrefix__WEBPACK_IMPORTED_MODULE_0__["default"])('form-floating'));
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/FormGroup.js":
 /*!*******************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/Offcanvas.js ***!
+  !*** ./node_modules/react-bootstrap/esm/FormGroup.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _FormContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FormContext */ "./node_modules/react-bootstrap/esm/FormContext.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+const FormGroup = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef(({
+  controlId,
+  // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+  as: Component = 'div',
+  ...props
+}, ref) => {
+  const context = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => ({
+    controlId
+  }), [controlId]);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_FormContext__WEBPACK_IMPORTED_MODULE_2__["default"].Provider, {
+    value: context,
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(Component, { ...props,
+      ref: ref
+    })
+  });
+});
+FormGroup.displayName = 'FormGroup';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormGroup);
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/FormLabel.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/FormLabel.js ***!
   \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -34485,18 +33345,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @restart/hooks/useEventCallback */ "./node_modules/@restart/hooks/esm/useEventCallback.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _restart_ui_Modal__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @restart/ui/Modal */ "./node_modules/@restart/ui/esm/Modal.js");
-/* harmony import */ var _Fade__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Fade */ "./node_modules/react-bootstrap/esm/Fade.js");
-/* harmony import */ var _OffcanvasBody__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./OffcanvasBody */ "./node_modules/react-bootstrap/esm/OffcanvasBody.js");
-/* harmony import */ var _OffcanvasToggling__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./OffcanvasToggling */ "./node_modules/react-bootstrap/esm/OffcanvasToggling.js");
-/* harmony import */ var _ModalContext__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./ModalContext */ "./node_modules/react-bootstrap/esm/ModalContext.js");
-/* harmony import */ var _NavbarContext__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./NavbarContext */ "./node_modules/react-bootstrap/esm/NavbarContext.js");
-/* harmony import */ var _OffcanvasHeader__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./OffcanvasHeader */ "./node_modules/react-bootstrap/esm/OffcanvasHeader.js");
-/* harmony import */ var _OffcanvasTitle__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./OffcanvasTitle */ "./node_modules/react-bootstrap/esm/OffcanvasTitle.js");
-/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
-/* harmony import */ var _BootstrapModalManager__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./BootstrapModalManager */ "./node_modules/react-bootstrap/esm/BootstrapModalManager.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var warning__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! warning */ "./node_modules/warning/warning.js");
+/* harmony import */ var warning__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(warning__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Col__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Col */ "./node_modules/react-bootstrap/esm/Col.js");
+/* harmony import */ var _FormContext__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FormContext */ "./node_modules/react-bootstrap/esm/FormContext.js");
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
@@ -34506,158 +33360,57 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
 const defaultProps = {
-  show: false,
-  backdrop: true,
-  keyboard: true,
-  scroll: false,
-  autoFocus: true,
-  enforceFocus: true,
-  restoreFocus: true,
-  placement: 'start'
+  column: false,
+  visuallyHidden: false
 };
-
-function DialogTransition(props) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_OffcanvasToggling__WEBPACK_IMPORTED_MODULE_4__["default"], { ...props
-  });
-}
-
-function BackdropTransition(props) {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Fade__WEBPACK_IMPORTED_MODULE_5__["default"], { ...props
-  });
-}
-
-const Offcanvas = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.forwardRef(({
+const FormLabel = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+  // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+  as: Component = 'label',
   bsPrefix,
+  column,
+  visuallyHidden,
   className,
-  children,
-  'aria-labelledby': ariaLabelledby,
-  placement,
-
-  /* BaseModal props */
-  show,
-  backdrop,
-  keyboard,
-  scroll,
-  onEscapeKeyDown,
-  onShow,
-  onHide,
-  container,
-  autoFocus,
-  enforceFocus,
-  restoreFocus,
-  restoreFocusOptions,
-  onEntered,
-  onExit,
-  onExiting,
-  onEnter,
-  onEntering,
-  onExited,
-  backdropClassName,
-  manager: propsManager,
+  htmlFor,
   ...props
 }, ref) => {
-  const modalManager = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
-  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_6__.useBootstrapPrefix)(bsPrefix, 'offcanvas');
   const {
-    onToggle
-  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useContext)(_NavbarContext__WEBPACK_IMPORTED_MODULE_7__["default"]) || {};
-  const handleHide = (0,_restart_hooks_useEventCallback__WEBPACK_IMPORTED_MODULE_1__["default"])(() => {
-    onToggle == null ? void 0 : onToggle();
-    onHide == null ? void 0 : onHide();
+    controlId
+  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_FormContext__WEBPACK_IMPORTED_MODULE_4__["default"]);
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_5__.useBootstrapPrefix)(bsPrefix, 'form-label');
+  let columnClass = 'col-form-label';
+  if (typeof column === 'string') columnClass = `${columnClass} ${columnClass}-${column}`;
+  const classes = classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix, visuallyHidden && 'visually-hidden', column && columnClass);
+   true ? warning__WEBPACK_IMPORTED_MODULE_2___default()(controlId == null || !htmlFor, '`controlId` is ignored on `<FormLabel>` when `htmlFor` is specified.') : 0;
+  htmlFor = htmlFor || controlId;
+  if (column) return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Col__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    ref: ref,
+    as: "label",
+    className: classes,
+    htmlFor: htmlFor,
+    ...props
   });
-  const modalContext = (0,react__WEBPACK_IMPORTED_MODULE_2__.useMemo)(() => ({
-    onHide: handleHide
-  }), [handleHide]);
-
-  function getModalManager() {
-    if (propsManager) return propsManager;
-
-    if (scroll) {
-      // Have to use a different modal manager since the shared
-      // one handles overflow.
-      if (!modalManager.current) modalManager.current = new _BootstrapModalManager__WEBPACK_IMPORTED_MODULE_8__["default"]({
-        handleContainerOverflow: false
-      });
-      return modalManager.current;
-    }
-
-    return (0,_BootstrapModalManager__WEBPACK_IMPORTED_MODULE_8__.getSharedManager)();
-  }
-
-  const handleEnter = (node, ...args) => {
-    if (node) node.style.visibility = 'visible';
-    onEnter == null ? void 0 : onEnter(node, ...args);
-  };
-
-  const handleExited = (node, ...args) => {
-    if (node) node.style.visibility = '';
-    onExited == null ? void 0 : onExited(...args);
-  };
-
-  const renderBackdrop = (0,react__WEBPACK_IMPORTED_MODULE_2__.useCallback)(backdropProps => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", { ...backdropProps,
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(`${bsPrefix}-backdrop`, backdropClassName)
-  }), [backdropClassName, bsPrefix]);
-
-  const renderDialog = dialogProps => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
-    role: "dialog",
-    ...dialogProps,
-    ...props,
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix, `${bsPrefix}-${placement}`),
-    "aria-labelledby": ariaLabelledby,
-    children: children
-  });
-
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_ModalContext__WEBPACK_IMPORTED_MODULE_9__["default"].Provider, {
-    value: modalContext,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_restart_ui_Modal__WEBPACK_IMPORTED_MODULE_10__["default"], {
-      show: show,
+  return (
+    /*#__PURE__*/
+    // eslint-disable-next-line jsx-a11y/label-has-for, jsx-a11y/label-has-associated-control
+    (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Component, {
       ref: ref,
-      backdrop: backdrop,
-      container: container,
-      keyboard: keyboard,
-      autoFocus: autoFocus,
-      enforceFocus: enforceFocus && !scroll,
-      restoreFocus: restoreFocus,
-      restoreFocusOptions: restoreFocusOptions,
-      onEscapeKeyDown: onEscapeKeyDown,
-      onShow: onShow,
-      onHide: handleHide,
-      onEnter: handleEnter,
-      onEntering: onEntering,
-      onEntered: onEntered,
-      onExit: onExit,
-      onExiting: onExiting,
-      onExited: handleExited,
-      manager: getModalManager(),
-      transition: DialogTransition,
-      backdropTransition: BackdropTransition,
-      renderBackdrop: renderBackdrop,
-      renderDialog: renderDialog
+      className: classes,
+      htmlFor: htmlFor,
+      ...props
     })
-  });
+  );
 });
-Offcanvas.displayName = 'Offcanvas';
-Offcanvas.defaultProps = defaultProps;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Object.assign(Offcanvas, {
-  Body: _OffcanvasBody__WEBPACK_IMPORTED_MODULE_11__["default"],
-  Header: _OffcanvasHeader__WEBPACK_IMPORTED_MODULE_12__["default"],
-  Title: _OffcanvasTitle__WEBPACK_IMPORTED_MODULE_13__["default"]
-}));
+FormLabel.displayName = 'FormLabel';
+FormLabel.defaultProps = defaultProps;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormLabel);
 
 /***/ }),
 
-/***/ "./node_modules/react-bootstrap/esm/OffcanvasBody.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/OffcanvasBody.js ***!
-  \***********************************************************/
+/***/ "./node_modules/react-bootstrap/esm/FormRange.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/FormRange.js ***!
+  \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -34665,16 +33418,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _createWithBsPrefix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./createWithBsPrefix */ "./node_modules/react-bootstrap/esm/createWithBsPrefix.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
+/* harmony import */ var _FormContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FormContext */ "./node_modules/react-bootstrap/esm/FormContext.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_createWithBsPrefix__WEBPACK_IMPORTED_MODULE_0__["default"])('offcanvas-body'));
+
+
+
+
+
+const FormRange = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+  bsPrefix,
+  className,
+  id,
+  ...props
+}, ref) => {
+  const {
+    controlId
+  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_FormContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_4__.useBootstrapPrefix)(bsPrefix, 'form-range');
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", { ...props,
+    type: "range",
+    ref: ref,
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix),
+    id: id || controlId
+  });
+});
+FormRange.displayName = 'FormRange';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormRange);
 
 /***/ }),
 
-/***/ "./node_modules/react-bootstrap/esm/OffcanvasHeader.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/OffcanvasHeader.js ***!
-  \*************************************************************/
+/***/ "./node_modules/react-bootstrap/esm/FormSelect.js":
+/*!********************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/FormSelect.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
+/* harmony import */ var _FormContext__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FormContext */ "./node_modules/react-bootstrap/esm/FormContext.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+
+
+const FormSelect = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+  bsPrefix,
+  size,
+  htmlSize,
+  className,
+  isValid = false,
+  isInvalid = false,
+  id,
+  ...props
+}, ref) => {
+  const {
+    controlId
+  } = (0,react__WEBPACK_IMPORTED_MODULE_1__.useContext)(_FormContext__WEBPACK_IMPORTED_MODULE_3__["default"]);
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_4__.useBootstrapPrefix)(bsPrefix, 'form-select');
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("select", { ...props,
+    size: htmlSize,
+    ref: ref,
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix, size && `${bsPrefix}-${size}`, isValid && `is-valid`, isInvalid && `is-invalid`),
+    id: id || controlId
+  });
+});
+FormSelect.displayName = 'FormSelect';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormSelect);
+
+/***/ }),
+
+/***/ "./node_modules/react-bootstrap/esm/FormText.js":
+/*!******************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/FormText.js ***!
+  \******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -34686,39 +33516,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
-/* harmony import */ var _AbstractModalHeader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AbstractModalHeader */ "./node_modules/react-bootstrap/esm/AbstractModalHeader.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
 
 
-
-const defaultProps = {
-  closeLabel: 'Close',
-  closeButton: false
-};
-const OffcanvasHeader = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
+const FormText = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef( // Need to define the default "as" during prop destructuring to be compatible with styled-components github.com/react-bootstrap/react-bootstrap/issues/3595
+({
   bsPrefix,
   className,
+  as: Component = 'small',
+  muted,
   ...props
 }, ref) => {
-  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_3__.useBootstrapPrefix)(bsPrefix, 'offcanvas-header');
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_AbstractModalHeader__WEBPACK_IMPORTED_MODULE_4__["default"], {
+  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_3__.useBootstrapPrefix)(bsPrefix, 'form-text');
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(Component, { ...props,
     ref: ref,
-    ...props,
-    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix)
+    className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, bsPrefix, muted && 'text-muted')
   });
 });
-OffcanvasHeader.displayName = 'OffcanvasHeader';
-OffcanvasHeader.defaultProps = defaultProps;
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OffcanvasHeader);
+FormText.displayName = 'FormText';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (FormText);
 
 /***/ }),
 
-/***/ "./node_modules/react-bootstrap/esm/OffcanvasTitle.js":
-/*!************************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/OffcanvasTitle.js ***!
-  \************************************************************/
+/***/ "./node_modules/react-bootstrap/esm/Switch.js":
+/*!****************************************************!*\
+  !*** ./node_modules/react-bootstrap/esm/Switch.js ***!
+  \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -34726,73 +33551,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _createWithBsPrefix__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./createWithBsPrefix */ "./node_modules/react-bootstrap/esm/createWithBsPrefix.js");
-/* harmony import */ var _divWithClassName__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./divWithClassName */ "./node_modules/react-bootstrap/esm/divWithClassName.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _FormCheck__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FormCheck */ "./node_modules/react-bootstrap/esm/FormCheck.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 
 
-const DivStyledAsH5 = (0,_divWithClassName__WEBPACK_IMPORTED_MODULE_0__["default"])('h5');
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_createWithBsPrefix__WEBPACK_IMPORTED_MODULE_1__["default"])('offcanvas-title', {
-  Component: DivStyledAsH5
+
+const Switch = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwardRef((props, ref) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_FormCheck__WEBPACK_IMPORTED_MODULE_2__["default"], { ...props,
+  ref: ref,
+  type: "switch"
 }));
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/OffcanvasToggling.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/OffcanvasToggling.js ***!
-  \***************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-transition-group/Transition */ "./node_modules/react-transition-group/esm/Transition.js");
-/* harmony import */ var _transitionEndListener__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./transitionEndListener */ "./node_modules/react-bootstrap/esm/transitionEndListener.js");
-/* harmony import */ var _TransitionWrapper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./TransitionWrapper */ "./node_modules/react-bootstrap/esm/TransitionWrapper.js");
-/* harmony import */ var _ThemeProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ThemeProvider */ "./node_modules/react-bootstrap/esm/ThemeProvider.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-
-
-
-
-
-
-const defaultProps = {
-  in: false,
-  mountOnEnter: false,
-  unmountOnExit: false,
-  appear: false
-};
-const transitionStyles = {
-  [react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_3__.ENTERING]: 'show',
-  [react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_3__.ENTERED]: 'show'
-};
-const OffcanvasToggling = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.forwardRef(({
-  bsPrefix,
-  className,
-  children,
-  ...props
-}, ref) => {
-  bsPrefix = (0,_ThemeProvider__WEBPACK_IMPORTED_MODULE_4__.useBootstrapPrefix)(bsPrefix, 'offcanvas');
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_TransitionWrapper__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    ref: ref,
-    addEndListener: _transitionEndListener__WEBPACK_IMPORTED_MODULE_6__["default"],
-    ...props,
-    childRef: children.ref,
-    children: (status, innerProps) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.cloneElement(children, { ...innerProps,
-      className: classnames__WEBPACK_IMPORTED_MODULE_0___default()(className, children.props.className, (status === react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_3__.ENTERING || status === react_transition_group_Transition__WEBPACK_IMPORTED_MODULE_3__.EXITING) && `${bsPrefix}-toggling`, transitionStyles[status])
-    })
-  });
-});
-OffcanvasToggling.defaultProps = defaultProps;
-OffcanvasToggling.displayName = 'OffcanvasToggling';
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (OffcanvasToggling);
+Switch.displayName = 'Switch';
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Object.assign(Switch, {
+  Input: _FormCheck__WEBPACK_IMPORTED_MODULE_2__["default"].Input,
+  Label: _FormCheck__WEBPACK_IMPORTED_MODULE_2__["default"].Label
+}));
 
 /***/ }),
 
@@ -34957,46 +33730,6 @@ const TransitionWrapper = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.forwar
   });
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TransitionWrapper);
-
-/***/ }),
-
-/***/ "./node_modules/react-bootstrap/esm/createChainedFunction.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/react-bootstrap/esm/createChainedFunction.js ***!
-  \*******************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/**
- * Safe chained function
- *
- * Will only create a new function if needed,
- * otherwise will pass back existing functions or null.
- *
- * @param {function} functions to chain
- * @returns {function|null}
- */
-function createChainedFunction(...funcs) {
-  return funcs.filter(f => f != null).reduce((acc, f) => {
-    if (typeof f !== 'function') {
-      throw new Error('Invalid Argument Type, must only provide functions, undefined, or null.');
-    }
-
-    if (acc === null) return f;
-    return function chainedFunction(...args) {
-      // @ts-ignore
-      acc.apply(this, args); // @ts-ignore
-
-      f.apply(this, args);
-    };
-  }, null);
-}
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createChainedFunction);
 
 /***/ }),
 
@@ -72830,6 +71563,79 @@ function defaultKey(key) {
 function canAcceptRef(component) {
   return !!component && (typeof component !== 'function' || component.prototype && component.prototype.isReactComponent);
 }
+
+/***/ }),
+
+/***/ "./node_modules/warning/warning.js":
+/*!*****************************************!*\
+  !*** ./node_modules/warning/warning.js ***!
+  \*****************************************/
+/***/ ((module) => {
+
+"use strict";
+/**
+ * Copyright (c) 2014-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+/**
+ * Similar to invariant but only logs a warning if the condition is not met.
+ * This can be used to log issues in development environments in critical
+ * paths. Removing the logging code for production environments will keep the
+ * same logic and follow the same code paths.
+ */
+
+var __DEV__ = "development" !== 'production';
+
+var warning = function() {};
+
+if (__DEV__) {
+  var printWarning = function printWarning(format, args) {
+    var len = arguments.length;
+    args = new Array(len > 1 ? len - 1 : 0);
+    for (var key = 1; key < len; key++) {
+      args[key - 1] = arguments[key];
+    }
+    var argIndex = 0;
+    var message = 'Warning: ' +
+      format.replace(/%s/g, function() {
+        return args[argIndex++];
+      });
+    if (typeof console !== 'undefined') {
+      console.error(message);
+    }
+    try {
+      // --- Welcome to debugging React ---
+      // This error was thrown as a convenience so that you can use this stack
+      // to find the callsite that caused this warning to fire.
+      throw new Error(message);
+    } catch (x) {}
+  }
+
+  warning = function(condition, format, args) {
+    var len = arguments.length;
+    args = new Array(len > 2 ? len - 2 : 0);
+    for (var key = 2; key < len; key++) {
+      args[key - 2] = arguments[key];
+    }
+    if (format === undefined) {
+      throw new Error(
+          '`warning(condition, format, ...args)` requires a warning ' +
+          'message argument'
+      );
+    }
+    if (!condition) {
+      printWarning.apply(null, [format].concat(args));
+    }
+  };
+}
+
+module.exports = warning;
+
 
 /***/ }),
 

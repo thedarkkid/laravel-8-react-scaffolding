@@ -1,10 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import slice from '../store/slices/counter';
+import slice from '../../store/slices/counter';
 
-export default function Example () {
+export default function Home () {
     const count = useSelector(slice.selectors.getCount);
     const { increment, decrement } = slice.actions;
     const dispatch = useDispatch();
@@ -26,8 +25,4 @@ export default function Example () {
             </div>
         </div>
     );
-}
-
-if (document.getElementById('example')) {
-    ReactDOM.render(<Example/>, document.getElementById('example'));
 }
